@@ -1,0 +1,83 @@
+# Node modules and build
+node_modules/
+dist/
+.next/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Data analysis and extraction scripts
+extract-4-products-tutorials.js
+analyze-products.js
+analyze-specific-products.js
+analyze-specific-products-from-data.js
+analyze-ui-templates.js
+api-data-overview.js
+check-api-consistency.js
+check-specific-products.js
+comprehensive-product-query.js
+count-slugs.js
+create-product-data-json.js
+deep-pattern-and-video-search.js
+deep-video-search.js
+fetch-all-products.js
+fetch-products.js
+search-tutorial-data.js
+test-api.js
+test-products.js
+fetch-tutorial-data.js
+extract-tutorial-content.js
+extract-tutorial-content-advanced.js
+create-dynamic-tutorial-system.js
+create-tutorial-component.js
+
+# Data analysis and extraction outputs
+extracted-tutorial-*.json
+extracted-4-products-tutorials.json
+slug-analysis.json
+ui-template-analysis.json
+all-products.json
+complete-product-data.json
+products.json
+tutorial-data.json
+react-component-data.json
+react-component-data-advanced.json
+extracted-tutorial-data.json
+extracted-tutorial-data-advanced.json
+clean-tutorial-data.json
+product-handles.txt
+
+# Documentation and summaries
+tutorial-system-summary.md
+template-assignment-summary.md
+
+# Logs and temporary files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build outputs
+out/
+build/

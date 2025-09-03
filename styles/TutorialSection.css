@@ -1,0 +1,28 @@
+/* Tutorial Section Styles */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+.tutorial-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tutorial-section {
+    padding: 2rem 1rem;
+  }
+  
+  .animate-marquee {
+    animation-duration: 15s;
+  }
+}
