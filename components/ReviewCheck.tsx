@@ -26,7 +26,7 @@ const reviews: Review[] = [
   },
   {
     id: 2,
-    name: " Ahmed",
+    name: "Ahmed",
     images: ["/images/Hw1.png", "/images/Hw3.jpg", "/images/Hw9.JPG"],
     avatar: "/images/user2.png",
     text: "Maine Bamboo Hanging Wall lagwaya aur woh bohot hi khubsurat lagta hai. EcoBamboo ka design aur eco-friendly kaam waqai lajawab hai. Ghar ka mahol fresh aur stylish hogaya!",
@@ -46,6 +46,22 @@ const reviews: Review[] = [
     images: ["/images/Sf6.png", "/images/Sf3.JPG"],
     avatar: "/images/user4.png",
     text: "The Small Flower Pot from EcoBamboo is such a charming addition to my home. Simple, elegant, and eco-friendly. Highly recommended!",
+    rating: 4,
+  },
+  {
+    id: 5,
+    name: "Sophia Khan",
+    images: ["/images/Hw5.jpg", "/images/Hw6.png"],
+    avatar: "/images/user5.png",
+    text: "EcoBamboo ka Hanging Wall decor bohot hi classy hai. Mere drawing room ki look bilkul badal gayi. Highly recommended!",
+    rating: 5,
+  },
+  {
+    id: 6,
+    name: "David Miller",
+    images: ["/images/Sf4.jpg", "/images/Sf5.png"],
+    avatar: "/images/user6.png",
+    text: "The Flower Pot from EcoBamboo is simple yet very stylish. It adds a modern and eco-friendly touch to my space.",
     rating: 4,
   },
 ];

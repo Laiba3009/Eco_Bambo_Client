@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { shopifyFetch } from "../../lib/shopify";
-import ImageSlider from "../../components/ImageSlider";
 import AddToCart from "../../components/AddToCart";
 import TextSlider from "../../components/TextSlider";
 import Accordion from "../../components/Accordion";
 import DynamicTutorialSection from "../../components/DynamicTutorialSection";
 import ReviewCheck from "@/components/ReviewCheck";
 import PlanterFAQSection from "../../components/FAQ_1";
-import FeatureHighlights from "../../components/FeatureHighlights";
 import RelatedProducts from "../../components/RelatedProducts";
 import { FaShippingFast } from "react-icons/fa";
 import Head from "next/head";
@@ -186,12 +184,7 @@ export default function LargeBambooStandingPlantPotPage() {
       {/* Main Product Detail Section */}
       <div className="w-full max-w-7xl mx-auto py-6 grid grid-cols-1 md:grid-cols-2 sm:gap-8 px-0">
        
-        {/* Left - ImageSlider */}
-        <ImageSlider
-          images={productData.images}
-          currentImage={currentImage}
-          setCurrentImage={setCurrentImage}
-        />
+       
 
         {/* Right - Product Info */}
         <div className="flex flex-col space-y-4 w-[100%]">

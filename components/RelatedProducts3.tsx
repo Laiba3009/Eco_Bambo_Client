@@ -245,8 +245,8 @@ const RelatedProducts3 = () => {
   // ✅ Loading State
   if (!isClient || loading) {
     return (
-      <section className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-12 px-4 font-sans">
-        <div className="max-w-6xl mx-auto w-full text-center">
+      <section className="min-h-screen flex flex-col items-center justify-center py-12 px-4 font-sans">
+        <div className="max-w-full mx-auto w-full text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
           <p className="text-lg text-gray-700">
             Loading products from Shopify...
@@ -260,8 +260,7 @@ const RelatedProducts3 = () => {
   if (error || products.length === 0) {
     return (
       <section className="min-h-screen flex flex-col items-center justify-center py-12 px-4 font-sans">
-          <div className="max-w-full mx-auto w-full">   {/* 👈 full width container */}
-
+        <div className="max-w-full mx-auto w-full text-center">
           <p className="text-lg text-red-600 mb-4">
             {error || "No products available"}
           </p>
@@ -278,25 +277,24 @@ const RelatedProducts3 = () => {
 
   // ✅ Render
   return (
-    <section className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-12 px-4 font-sans">
-      <div className="max-w-6xl mx-auto w-full">
+    <section className="min-h-screen flex flex-col items-center justify-center py-12 px-4 font-sans">
+      <div className="max-w-full mx-auto w-full">
         <div
           ref={scrollRef}
-          className="flex overflow-x-scroll snap-x snap-mandatory pb-8 space-x-6 md:space-x-8 lg:space-x-10 px-4 scrollbar-hide"
+          className="flex overflow-x-scroll snap-x snap-mandatory pb-8 space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-10 px-2 scrollbar-hide"
           style={{ scrollBehavior: "smooth" }}
         >
-          {/* ✅ Text Animation Card with Image from public/images */}
+          {/* ✅ Text Animation Card with Image */}
           <div
-            className="flex-none w-64 md:w-72 lg:w-80 rounded-xl shadow-xl overflow-hidden snap-start flex items-center justify-center p-6 text-center relative"
+            className="flex-none w-56 sm:w-64 md:w-72 lg:w-80 xl:w-96 rounded-xl shadow-xl overflow-hidden snap-start flex items-center justify-center p-6 text-center relative"
             style={{
-              backgroundImage: "url('/images/large-f.jpg')", // 👈 image from public/images
+              backgroundImage: "url('/images/large-f.jpg')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           >
-            {/* Overlay */}
             <div className="absolute inset-0 bg-black/60"></div>
-            <h2 className="relative z-10 text-3xl sm:text-4xl font-extrabold leading-tight text-white drop-shadow-md">
+            <h2 className="relative z-10 text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight text-white drop-shadow-md">
               <CustomTypewriter
                 strings={[
                   "Explore Our Latest Products!",
@@ -313,7 +311,7 @@ const RelatedProducts3 = () => {
           {products.map((product, index) => (
             <motion.div
               key={product.id}
-              className="flex-none w-64 md:w-72 lg:w-80 bg-white rounded-xl shadow-xl overflow-hidden snap-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+              className="flex-none w-56 sm:w-64 md:w-72 lg:w-80 xl:w-96 bg-white rounded-xl shadow-xl overflow-hidden snap-center cursor-pointer transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.05 }}
@@ -327,7 +325,7 @@ const RelatedProducts3 = () => {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-64 object-cover rounded-t-xl"
+                  className="w-full h-56 sm:h-64 object-cover rounded-t-xl"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.onerror = null;
@@ -335,9 +333,9 @@ const RelatedProducts3 = () => {
                   }}
                 />
               </Link>
-              <div className="p-5">
+              <div className="p-4 sm:p-5">
                 <Link href={`/products/${product.handle}`}>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-indigo-600 transition-colors">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 hover:text-indigo-600 transition-colors">
                     {product.name}
                   </h3>
                 </Link>
@@ -345,11 +343,11 @@ const RelatedProducts3 = () => {
                   {product.description}
                 </p>
                 <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-yellow-500">
+                  <span className="text-base sm:text-lg font-bold text-yellow-500">
                     {product.price}
                   </span>
                   <Link href={`/products/${product.handle}`}>
-                    <button className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors duration-200 shadow-md">
+                    <button className="bg-black text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium hover:bg-gray-800 transition-colors duration-200 shadow-md">
                       View Product
                     </button>
                   </Link>
@@ -360,7 +358,7 @@ const RelatedProducts3 = () => {
         </div>
 
         {/* ✅ Progress Bar */}
-        <div className="w-full bg-gray-300 rounded-full h-2.5 mt-8 overflow-hidden">
+        <div className="w-full bg-gray-200 rounded-full h-2 mt-8 overflow-hidden">
           <motion.div
             className="bg-yellow-500 h-full rounded-full"
             initial={{ width: "0%" }}
