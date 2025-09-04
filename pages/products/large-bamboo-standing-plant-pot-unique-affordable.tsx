@@ -278,9 +278,8 @@ export default function LargeBambooStandingPlantPotPage() {
       {/* Additional Sections */}
       <PromoBanner2 />
           <ReviewCheck />
-      <RelatedProducts2></RelatedProducts2>
-    <PlanterFAQSection />
-      <FeatureHighlights />
+              <PlanterFAQSection />
+      <RelatedProducts2/>
     </div>
     </>
   );

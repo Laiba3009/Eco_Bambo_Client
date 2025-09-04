@@ -108,7 +108,7 @@ const PromoBanner = () => {
             style={{ textDecoration: 'none' }}
           >
             <img
-              src="/images/large-hang-wall-baner.jpg"
+              src="/images/large-hang wall-baner.jpg"
               alt="Banner 2"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />

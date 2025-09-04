@@ -330,10 +330,15 @@ const RelatedProducts2 = () => {
   return (
     <div className="min-h-screen bg-white
                     flex flex-col items-center justify-center p-4 font-inter">
-      <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-8 
-                     text-center leading-tight rounded-lg p-3">
-        Featured Products ✨
-      </h1>
+                      <motion.h2
+  initial={{ opacity: 0, y: -30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-black my-10"
+>
+  Related Products
+</motion.h2>
+    
       <div className="w-full max-w-7xl relative">
         <div className="embla" ref={emblaRef}>
           <div className="embla__container flex">
@@ -362,7 +367,7 @@ const RelatedProducts2 = () => {
           </svg>
         </button>
         <button 
-          className="embla__button embla__button--next bg-gray-700 hover:bg-gray-900 text-white rounded-full p-3 shadow-lg 
+          className="embla__button embla__button--next bg-gray-700 hover:bg--[#b8860b] text-white rounded-full p-3 shadow-lg 
                      absolute top-1/2 -right-12 -translate-y-1/2 z-10 
                      transition-colors duration-300 transform translate-x-full md:translate-x-0"
           onClick={scrollNext}

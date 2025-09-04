@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { shopifyFetch } from "../lib/shopify";
 import Link from "next/link";
 
-// Custom Typewriter component (reused for consistency)
+// ✅ Custom Typewriter component
 type CustomTypewriterProps = {
   strings: string[];
   delay?: number;
@@ -15,7 +15,7 @@ const CustomTypewriter: React.FC<CustomTypewriterProps> = ({
   delay = 10,
   loop = true,
 }) => {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [stringIndex, setStringIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -51,7 +51,7 @@ const CustomTypewriter: React.FC<CustomTypewriterProps> = ({
   return <span>{text}</span>;
 };
 
-// Product interface for Shopify data
+// ✅ Product interfaces
 interface ShopifyProduct {
   id: string;
   title: string;
@@ -79,7 +79,6 @@ interface ShopifyProduct {
   productType?: string;
 }
 
-// Transformed product interface for display
 interface Product {
   id: string;
   name: string;
@@ -90,19 +89,7 @@ interface Product {
   productType?: string;
 }
 
-// Animation Variants for initial product card entrance
-const cardEntranceVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.42, 0, 0.58, 1],
-    },
-  },
-};
-
+// ✅ Main Component
 const RelatedProducts3 = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -112,27 +99,23 @@ const RelatedProducts3 = () => {
   const [isClient, setIsClient] = useState(false);
   const [refReady, setRefReady] = useState(false);
 
-  // Set client state after component mounts to prevent hydration mismatch
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Check if ref is ready after client mount
   useEffect(() => {
     if (isClient && scrollRef.current) {
       setRefReady(true);
     }
   }, [isClient]);
 
-  // Only use useScroll when both client is mounted AND ref is ready
-  const scrollData = useScroll({ 
-    container: refReady ? scrollRef : undefined 
+  const scrollData = useScroll({
+    container: refReady ? scrollRef : undefined,
   });
 
-  // Safely destructure scrollXProgress with fallback
   const scrollXProgress = scrollData?.scrollXProgress || { current: 0 };
 
-  // Fetch products from Shopify
+  // ✅ Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -181,7 +164,6 @@ const RelatedProducts3 = () => {
           throw new Error("No products data received");
         }
 
-        // Transform Shopify data to our Product interface
         const transformedProducts = data.products.edges
           .map((edge: { node: ShopifyProduct }) => {
             const node = edge.node;
@@ -190,27 +172,30 @@ const RelatedProducts3 = () => {
               name: node.title,
               handle: node.handle,
               description: node.description,
-              price: `${node.variants.edges[0]?.node.priceV2.currencyCode || ""} ${node.variants.edges[0]?.node.priceV2.amount || "N/A"}`,
-              image: node.images.edges[0]?.node.src || "/images/placeholder.jpg",
-              productType: node.productType
+              price: `${node.variants.edges[0]?.node.priceV2.currencyCode || ""} ${
+                node.variants.edges[0]?.node.priceV2.amount || "N/A"
+              }`,
+              image:
+                node.images.edges[0]?.node.src || "/images/placeholder.jpg",
+              productType: node.productType,
             };
           })
-          .filter((product: { image: string; price: string | string[]; }) => {
-            // Filter out products without images or prices
-            if (!product.image || product.image === "/images/placeholder.jpg") return false;
+          .filter((product: Product) => {
+            if (!product.image || product.image === "/images/placeholder.jpg")
+              return false;
             if (product.price.includes("N/A")) return false;
             return true;
           })
-          .slice(0, 6); // Limit to 6 products for the slider
+          .slice(0, 6);
 
         setProducts(transformedProducts);
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching products:', err);
+        console.error("Error fetching products:", err);
         if (err instanceof Error) {
           setError(err.message);
         } else {
-          setError('An unknown error occurred');
+          setError("An unknown error occurred");
         }
         setLoading(false);
       }
@@ -219,22 +204,7 @@ const RelatedProducts3 = () => {
     fetchProducts();
   }, []);
 
-  // Define the scale transform for the animated text div
-  // It scales from 1 (full size) down to 0 (disappears)
-  // as scrollXProgress goes from 0 to 0.2 (adjust this range for desired speed)
-  const textScale = useTransform(
-    scrollXProgress,
-    [0, 0.2], // When scrollXProgress is 0, scale is 1. When it's 0.2, scale is 0.
-    [1, 0]
-  );
-
-  // Define the opacity transform for the animated text div to fade out
-  const textOpacity = useTransform(
-    scrollXProgress,
-    [0, 0.15], // Starts fading at 0, fully transparent at 0.15
-    [1, 0]
-  );
-
+  // ✅ Scroll Progress
   useEffect(() => {
     const element = scrollRef.current;
     if (!element || !isClient || !refReady) return;
@@ -245,55 +215,58 @@ const RelatedProducts3 = () => {
       const scrollWidth = el.scrollWidth - el.clientWidth;
 
       if (scrollWidth > 0) {
-        // Find the width of the first child (text div) safely
         const textDivWidth = (() => {
-          const firstChild = (element as HTMLElement).children[0] as HTMLElement | undefined;
+          const firstChild = (element as HTMLElement).children[0] as
+            | HTMLElement
+            | undefined;
           return firstChild ? firstChild.offsetWidth : 0;
         })();
 
-        // Calculate the scrollable width for products only
         const productsScrollableWidth = scrollWidth - textDivWidth;
-
-        // Adjust scrollLeft to start counting from after the text div
         const adjustedScrollLeft = Math.max(0, scrollLeft - textDivWidth);
 
-        // Calculate progress based on product scrolling only
         const progress = (adjustedScrollLeft / productsScrollableWidth) * 100;
-        setScrollProgress(isNaN(progress) || !isFinite(progress) ? 0 : progress);
+        setScrollProgress(
+          isNaN(progress) || !isFinite(progress) ? 0 : progress
+        );
       } else {
         setScrollProgress(0);
       }
     };
 
-    (element as HTMLElement).addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial calculation
+    element.addEventListener("scroll", handleScroll);
+    handleScroll();
 
     return () => {
-      (element as HTMLElement).removeEventListener('scroll', handleScroll);
+      element.removeEventListener("scroll", handleScroll);
     };
-  }, [products, isClient, refReady]); // Recalculate if products change, client state changes, or ref becomes ready
+  }, [products, isClient, refReady]);
 
-  // Show loading state during SSR or initial client render
+  // ✅ Loading State
   if (!isClient || loading) {
     return (
       <section className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-12 px-4 font-sans">
         <div className="max-w-6xl mx-auto w-full text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-          <p className="text-lg text-gray-700">Loading products from Shopify...</p>
+          <p className="text-lg text-gray-700">
+            Loading products from Shopify...
+          </p>
         </div>
       </section>
     );
   }
 
+  // ✅ Error State
   if (error || products.length === 0) {
     return (
-      <section className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-12 px-4 font-sans">
-        <div className="max-w-6xl mx-auto w-full text-center">
+      <section className="min-h-screen flex flex-col items-center justify-center py-12 px-4 font-sans">
+          <div className="max-w-full mx-auto w-full">   {/* 👈 full width container */}
+
           <p className="text-lg text-red-600 mb-4">
             {error || "No products available"}
           </p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
           >
             Retry
@@ -303,42 +276,40 @@ const RelatedProducts3 = () => {
     );
   }
 
+  // ✅ Render
   return (
     <section className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-12 px-4 font-sans">
       <div className="max-w-6xl mx-auto w-full">
-        {/* Product Slider Container - now includes the animated text */}
         <div
           ref={scrollRef}
           className="flex overflow-x-scroll snap-x snap-mandatory pb-8 space-x-6 md:space-x-8 lg:space-x-10 px-4 scrollbar-hide"
-          style={{ scrollBehavior: 'smooth' }}
+          style={{ scrollBehavior: "smooth" }}
         >
-          {/* Static Title as the first item in the slider - always visible */}
-          <div className="flex-none w-64 md:w-72 lg:w-80 bg-black text-white rounded-xl shadow-xl overflow-hidden snap-start flex items-center justify-center p-6 text-center">
-            <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight drop-shadow-sm">
+          {/* ✅ Text Animation Card with Image from public/images */}
+          <div
+            className="flex-none w-64 md:w-72 lg:w-80 rounded-xl shadow-xl overflow-hidden snap-start flex items-center justify-center p-6 text-center relative"
+            style={{
+              backgroundImage: "url('/images/large-f.jpg')", // 👈 image from public/images
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/60"></div>
+            <h2 className="relative z-10 text-3xl sm:text-4xl font-extrabold leading-tight text-white drop-shadow-md">
               <CustomTypewriter
-                strings={["Explore Our Latest Products!", "Handpicked for Your Home!", "Shop Unique Decor & Plants!"]}
+                strings={[
+                  "Explore Our Latest Products!",
+                  "Handpicked for Your Home!",
+                  "Shop Unique Decor & Plants!",
+                ]}
                 delay={80}
                 loop={true}
               />
             </h2>
           </div>
 
-          {/* Animated Title that scales and fades with scroll */}
-          {/* <motion.div
-            className="flex-none w-64 md:w-72 lg:w-[0px] bg-indigo-700 text-white rounded-xl shadow-xl overflow-hidden snap-start flex items-center justify-center p-6 text-center"
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            style={{ scale: textScale, opacity: textOpacity }}
-          >
-            <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight drop-shadow-sm">
-              <CustomTypewriter
-                strings={["Explore Our Latest Products!", "Handpicked for Your Home!", "Shop Unique Decor & Plants!"]}
-                delay={70}
-                loop={true}
-              />
-            </h2>
-          </motion.div> */}
-
-          {/* Product Cards - NO X TRANSFORM FROM SCROLL */}
+          {/* ✅ Product Cards */}
           {products.map((product, index) => (
             <motion.div
               key={product.id}
@@ -346,7 +317,11 @@ const RelatedProducts3 = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.05 }}
-              transition={{ delay: index * 0.1, duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+              transition={{
+                delay: index * 0.1,
+                duration: 0.6,
+                ease: [0.42, 0, 0.58, 1],
+              }}
             >
               <Link href={`/products/${product.handle}`}>
                 <img
@@ -356,7 +331,7 @@ const RelatedProducts3 = () => {
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.onerror = null;
-                    target.src = `https://placehold.co/300x400/CCCCCC/000000?text=Image+Error`;
+                    target.src = `/images/placeholder.jpg`;
                   }}
                 />
               </Link>
@@ -366,9 +341,13 @@ const RelatedProducts3 = () => {
                     {product.name}
                   </h3>
                 </Link>
-                <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
+                <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                  {product.description}
+                </p>
                 <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-yellow-500">{product.price}</span>
+                  <span className="text-lg font-bold text-yellow-500">
+                    {product.price}
+                  </span>
                   <Link href={`/products/${product.handle}`}>
                     <button className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors duration-200 shadow-md">
                       View Product
@@ -380,7 +359,7 @@ const RelatedProducts3 = () => {
           ))}
         </div>
 
-        {/* Progress Bar */}
+        {/* ✅ Progress Bar */}
         <div className="w-full bg-gray-300 rounded-full h-2.5 mt-8 overflow-hidden">
           <motion.div
             className="bg-yellow-500 h-full rounded-full"
