@@ -192,15 +192,7 @@ export default function SmallBambooFlowerPotPage() {
         <title>{toTitleCase(product.title)}</title>
       </Head>
       <div className="w-full max-w-[100vw] overflow-x-hidden p-3 mt-12">
-      {/* Top Product Banner Image */}
-      <div className="w-full flex justify-center bg-white pt-6 pb-2">
-        <img
-          src={["https://cdn.shopify.com/s/files/1/0605/7974/1763/files/13_95a2bf96-f58a-4587-862e-1d0b56fb5b21.png?v=1744532370","https://cdn.shopify.com/s/files/1/0605/7974/1763/files/12_8843d7d3-1909-4806-9a81-c201189113eb.png?v=1744532287"][bannerImageIndex % 2]}
-          alt={`Product Banner ${bannerImageIndex + 1}`}
-          className="w-[90vw] max-w-7xl h-auto max-h-[700px] object-contain rounded-2xl shadow-2xl border border-gray-200 transition-opacity duration-500"
-          style={{ objectPosition: 'center' }}
-        />
-      </div>
+     
 
       {/* Main Product Detail Section */}
       <div className="w-full max-w-7xl mx-auto py-6 grid grid-cols-1 md:grid-cols-2 sm:gap-8 px-0">
