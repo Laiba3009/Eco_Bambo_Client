@@ -6,7 +6,7 @@ import Accordion from "../../components/Accordion";
 import DynamicTutorialSection from "../../components/DynamicTutorialSection";
 import PromoBanner1 from "../../components/PromoBanner1";
 import FAQSection from "../../components/FAQ";
-
+import ImageSlider from "../../components/ImageSlider";
 import FeatureHighlights from "../../components/FeatureHighlights";
 import RelatedProducts from "../../components/RelatedProducts";
 import { FaShippingFast } from "react-icons/fa";
@@ -188,20 +188,18 @@ export default function BambooWallHangingPage() {
         <title>{toTitleCase(product.title)}</title>
       </Head>
       <div className="w-full max-w-[100vw] overflow-x-hidden p-3 mt-12">
-      {/* Top Product Banner Image */}
-      <div className="w-full flex justify-center bg-white pt-6 pb-2">
-        <img
-          src={["https://cdn.shopify.com/s/files/1/0605/7974/1763/files/Untitled_design_6_94ceb65e-b8c9-4128-b800-9173ba5feaa0.png?v=1744435517","https://cdn.shopify.com/s/files/1/0605/7974/1763/files/8_0a80f77e-9933-4cf1-aed1-5a8d5da34a38.png?v=1743162714"][bannerImageIndex % 2]}
-          alt={`Product Banner ${bannerImageIndex + 1}`}
-          className="w-full max-w-6xl h-auto max-h-[500px] object-contain rounded-xl shadow-lg border border-gray-200 transition-opacity duration-500"
-          style={{ objectPosition: 'center' }}
-        />
-      </div>
+     
 
       {/* Main Product Detail Section */}
       <div className="w-full max-w-7xl mx-auto py-6 grid grid-cols-1 md:grid-cols-2 sm:gap-8 px-0">
        
         
+        {/* Left - ImageSlider */}
+        <ImageSlider
+          images={productData.images}
+          currentImage={currentImage}
+          setCurrentImage={setCurrentImage}
+        />
 
         {/* Right - Product Info */}
         <div className="flex flex-col space-y-4 w-[100%]">

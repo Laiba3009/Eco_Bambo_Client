@@ -11,6 +11,7 @@ import { FaShippingFast } from "react-icons/fa";
 import Head from "next/head";
 import PromoBanner2 from "@/components/PromoBanner2";
 import RelatedProducts2 from "@/components/RelatedProducts2";
+import ImageSlider from "../../components/ImageSlider";
 
 function toTitleCase(str: string) {
   return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -171,19 +172,17 @@ export default function LargeBambooStandingPlantPotPage() {
         <title>{toTitleCase(product.title)}</title>
       </Head>
       <div className="w-full max-w-[100vw] overflow-x-hidden p-3 mt-12">
-      {/* Top Product Banner Image */}
-      <div className="w-full flex justify-center bg-white pt-6 pb-2">
-        <img
-          src="https://cdn.shopify.com/s/files/1/0605/7974/1763/files/3_72a8fb27-ea97-4d14-a000-482366550b88.png?v=1743105124"
-          alt="Product Banner"
-          className="w-[80vw] max-w-7xl h-auto max-h-[600px] object-contain rounded-2xl shadow-2xl border border-gray-200 transition-opacity duration-500"
-          style={{ objectPosition: 'center' }}
-        />
-      </div>
+      
 
       {/* Main Product Detail Section */}
       <div className="w-full max-w-7xl mx-auto py-6 grid grid-cols-1 md:grid-cols-2 sm:gap-8 px-0">
        
+        {/* Left - ImageSlider */}
+        <ImageSlider
+          images={productData.images}
+          currentImage={currentImage}
+          setCurrentImage={setCurrentImage}
+        />
        
 
         {/* Right - Product Info */}
