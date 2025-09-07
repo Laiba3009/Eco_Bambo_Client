@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function WhatsAppWidget() {
   const [open, setOpen] = useState(false);
-  const phone = "923001234567"; // apna number yahan lagao
+  const phone = "923416995870";
 
   function openWhatsApp(message: string) {
     const link = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
