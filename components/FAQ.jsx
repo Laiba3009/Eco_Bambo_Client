@@ -43,10 +43,10 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16">
+    <section className="w-full px-0 py-8 sm:py-12 md:py-16 bg-white">
       {/* Title */}
       <motion.h2
-        className="text-[30px] sm:text-[22px] md:text-[26px] lg:text-[30px] font-bold text-[#000000] font-dm text-center mb-10 leading-snug"
+        className="text-[30px] sm:text-[22px] md:text-[26px] lg:text-[30px] font-bold text-[#000000] font-dm mb-10 leading-snug text-center"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -55,7 +55,7 @@ const FAQSection = () => {
         Everything You Need to Know
       </motion.h2>
 
-      {/* FAQ Grid: 2 columns */}
+      {/* FAQ Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {faqs.map((faq, index) => (
           <div

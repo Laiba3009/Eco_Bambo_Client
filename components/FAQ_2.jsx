@@ -43,64 +43,63 @@ const FlowerPotFAQSection = () => {
           };
 
 
-  return (
-    <section className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16">
-      {/* Title */}
-      <motion.h2
-        className="text-[20px] sm:text-[22px] md:text-[26px] lg:text-[30px] font-bold text-[#000000] font-dm text-center mb-10 leading-snug"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        viewport={{ once: true }}
-      >
-            Everything You Need to Know
-
-      </motion.h2>
-
-      {/* FAQ Grid: 2 columns */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {flowerPotFaqs.map((faq, index) => (
-          <div
-            key={index}
-            onClick={() => toggleFAQ(index)}
-            className="rounded-md p-4 sm:p-5 md:p-6 bg-white shadow-sm hover:shadow-md transition cursor-pointer"
-          >
-            <div className="flex justify-between items-center">
-              <p className="font-semibold text-sm sm:text-base md:text-lg text-gray-800">
-                {faq.question}
-              </p>
-
-              <motion.div
-                initial={false}
-                animate={{ rotate: openIndex === index ? 180 : 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                {openIndex === index ? (
-                  <FiMinus className="text-xl text-gray-600" />
-                ) : (
-                  <FiPlus className="text-xl text-gray-600" />
-                )}
-              </motion.div>
-            </div>
-
-            <AnimatePresence mode="wait">
-              {openIndex === index && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed whitespace-pre-line"
-                >
-                  {faq.answer}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-};
+   return (
+     <section className="w-full px-0 py-8 sm:py-12 md:py-16 bg-white">
+       {/* Title */}
+       <motion.h2
+         className="text-[30px] sm:text-[22px] md:text-[26px] lg:text-[30px] font-bold text-[#000000] font-dm mb-10 leading-snug text-center"
+         initial={{ opacity: 0, y: 30 }}
+         whileInView={{ opacity: 1, y: 0 }}
+         transition={{ duration: 0.4 }}
+         viewport={{ once: true }}
+       >
+         Everything You Need to Know
+       </motion.h2>
+ 
+       {/* FAQ Grid */}
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+         {faqs.map((faq, index) => (
+           <div
+             key={index}
+             onClick={() => toggleFAQ(index)}
+             className="rounded-md p-4 sm:p-5 md:p-6 bg-white shadow-sm hover:shadow-md transition cursor-pointer"
+           >
+             <div className="flex justify-between items-center">
+               <p className="font-semibold text-sm sm:text-base md:text-lg text-gray-800">
+                 {faq.question}
+               </p>
+ 
+               <motion.div
+                 initial={false}
+                 animate={{ rotate: openIndex === index ? 180 : 0 }}
+                 transition={{ duration: 0.2 }}
+               >
+                 {openIndex === index ? (
+                   <FiMinus className="text-xl text-gray-600" />
+                 ) : (
+                   <FiPlus className="text-xl text-gray-600" />
+                 )}
+               </motion.div>
+             </div>
+ 
+             <AnimatePresence mode="wait">
+               {openIndex === index && (
+                 <motion.div
+                   initial={{ opacity: 0, height: 0 }}
+                   animate={{ opacity: 1, height: "auto" }}
+                   exit={{ opacity: 0, height: 0 }}
+                   transition={{ duration: 0.25 }}
+                   className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed whitespace-pre-line"
+                 >
+                   {faq.answer}
+                 </motion.div>
+               )}
+             </AnimatePresence>
+           </div>
+         ))}
+       </div>
+     </section>
+   );
+ };
 
 export default FlowerPotFAQSection;
