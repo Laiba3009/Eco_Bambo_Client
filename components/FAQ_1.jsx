@@ -56,7 +56,7 @@ const PlanterFAQSection = () => {
  
        {/* FAQ Grid */}
        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-         {faqs.map((faq, index) => (
+         {planterFaqs.map((planterFaqs, index) => (
            <div
              key={index}
              onClick={() => toggleFAQ(index)}
@@ -64,7 +64,7 @@ const PlanterFAQSection = () => {
            >
              <div className="flex justify-between items-center">
                <p className="font-semibold text-sm sm:text-base md:text-lg text-gray-800">
-                 {faq.question}
+                 {planterFaqs.question}
                </p>
  
                <motion.div
@@ -89,7 +89,7 @@ const PlanterFAQSection = () => {
                    transition={{ duration: 0.25 }}
                    className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed whitespace-pre-line"
                  >
-                   {faq.answer}
+                   {planterFaqs.answer}
                  </motion.div>
                )}
              </AnimatePresence>
