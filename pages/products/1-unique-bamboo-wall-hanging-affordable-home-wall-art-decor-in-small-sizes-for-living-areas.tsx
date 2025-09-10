@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { FaShippingFast } from "react-icons/fa";
+import Head from "next/head";
+
 import { shopifyFetch } from "../../lib/shopify";
 import AddToCart from "../../components/AddToCart";
 import TextSlider from "../../components/TextSlider";
@@ -9,11 +13,8 @@ import FAQSection from "../../components/FAQ";
 import ImageSlider from "../../components/ImageSlider";
 import FeatureHighlights from "../../components/FeatureHighlights";
 import RelatedProducts from "../../components/RelatedProducts";
-import { FaShippingFast } from "react-icons/fa";
-import Head from "next/head";
-
 import ReviewCheck from "@/components/ReviewCheck";
-import RelatedProducts2 from "@/components/RelatedProducts2";
+import RelatedProducts4 from "@/components/RelatedProducts4";
 
 function toTitleCase(str: string) {
   return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -151,12 +152,11 @@ export default function BambooWallHangingPage() {
   if (loading || !product) return <div className="p-10 text-center">Loading...</div>;
   if (error) return <div className="p-10 text-center text-red-600">Error: {error}</div>;
 
-  // Transform Shopify data to match original structure
+  // Transform Shopify data
   const images = product.images.edges.map(edge => edge.node.src);
   const price = product.variants.edges[0]?.node.priceV2.amount || "N/A";
   const currency = product.variants.edges[0]?.node.priceV2.currencyCode || "";
   
-  // Mock data to match original structure
   const productData = {
     title: product.title,
     ratings: "66+ (ratings)",
@@ -189,10 +189,8 @@ export default function BambooWallHangingPage() {
       </Head>
       <div className="w-full max-w-[100vw] overflow-x-hidden p-3 mt-12">
      
-
       {/* Main Product Detail Section */}
       <div className="w-full max-w-7xl mx-auto py-6 grid grid-cols-1 md:grid-cols-2 sm:gap-8 px-0">
-       
         
         {/* Left - ImageSlider */}
         <ImageSlider
@@ -267,7 +265,6 @@ export default function BambooWallHangingPage() {
             {/* Add to Cart Component */}
             <AddToCart product={productData} selectedVariant={selectedVariant} />
           </div>
-          
         </div>
       </div>
       
@@ -287,7 +284,11 @@ export default function BambooWallHangingPage() {
       <PromoBanner1 />
       <ReviewCheck /> 
       <FAQSection />
-      <RelatedProducts2 />
+
+      {/* ✅ Category Products Section with Props */}
+     
+       <RelatedProducts4 />
+
       <FeatureHighlights />
     </div>
     </>

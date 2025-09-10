@@ -1,17 +1,7 @@
-// To fix the missing module and types, run the following commands in your project root:
-//
-// npm install embla-carousel-react
-// npm install --save-dev @types/embla-carousel-react
-//
-// If @types/embla-carousel-react does not exist, you can skip it as the package may include its own types.
-//
-// Then, keep your imports as:
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
 import { shopifyFetch } from "../lib/shopify";
-import Link from "next/link";
-
 
 // Transformed product interface for display
 interface Product {
@@ -31,26 +21,33 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  // Generate random rating for demo (in real app, fetch from review system)
   const rating = Math.floor(Math.random() * 2) + 4; // 4-5 stars
   const reviewCount = Math.floor(Math.random() * 30) + 15; // 15-45 reviews
+
+  // Shopify product URL (replace with your domain)
+  const shopifyDomain = "https://ecobambo.com"; // <-- Change this
+  const productUrl = `${shopifyDomain}/products/${product.handle}`;
 
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden text-center my-2 mx-4
                     w-[250px] h-[380px] flex flex-col justify-between hover:shadow-xl transition-shadow duration-300">
-      <Link href={`/products/${product.handle}`}>
+
+      {/* Product Image */}
+      <a href={productUrl} target="_blank" rel="noopener noreferrer">
         <img
           src={product.image}
           alt={product.name}
           className="w-full h-48 object-cover rounded-t-xl cursor-pointer hover:scale-105 transition-transform duration-300"
         />
-      </Link>
+      </a>
+
       <div className="p-4 flex-1 flex flex-col">
-        <Link href={`/products/${product.handle}`}>
+        {/* Product Title */}
+        <a href={productUrl} target="_blank" rel="noopener noreferrer">
           <h3 className="text-lg font-semibold mb-2 text-gray-800 hover:text-blue-600 transition-colors cursor-pointer line-clamp-2">
             {product.name}
           </h3>
-        </Link>
+        </a>
         
         {/* Star Rating */}
         <div className="flex items-center justify-center mb-3">
@@ -75,17 +72,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         )}
         
         {/* View Details Button */}
-        <Link href={`/products/${product.handle}`} className="mt-3">
+        <a href={productUrl} target="_blank" rel="noopener noreferrer" className="mt-3">
           <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200 text-sm font-medium">
             View Product
           </button>
-        </Link>
+        </a>
       </div>
     </div>
   );
 };
 
-// AnimatedProductCard Component - Applies opacity and scale animation based on position
+// AnimatedProductCard Component
 interface AnimatedProductCardProps {
   product: Product;
   index: number;
@@ -97,7 +94,6 @@ const AnimatedProductCard: React.FC<AnimatedProductCardProps> = ({ product, inde
   let opacity = 1;
   let scale = 1;
 
-  // Calculate the effective distance considering the infinite loop for a smoother transition
   const distance = index - currentIndex;
   const halfLength = totalSlides / 2;
 
@@ -106,27 +102,22 @@ const AnimatedProductCard: React.FC<AnimatedProductCardProps> = ({ product, inde
     effectiveDistance = distance;
   } else if (distance > halfLength) {
     effectiveDistance = distance - totalSlides;
-  } else { // distance < -halfLength
+  } else {
     effectiveDistance = distance + totalSlides;
   }
 
-  // Adjust opacity and scale based on effective distance from the center
   if (effectiveDistance === 0) {
-    // Center item
     opacity = 1;
-    scale = 1.05; // Slightly larger for emphasis
+    scale = 1.05;
   } else if (Math.abs(effectiveDistance) === 1) {
-    // Immediately left/right items
-    opacity = 0.7; // Slightly faded
-    scale = 0.95; // Slightly smaller
+    opacity = 0.7;
+    scale = 0.95;
   } else if (Math.abs(effectiveDistance) === 2) {
-    // Two steps away
-    opacity = 0.4; // More faded
-    scale = 0.9; // Smaller
+    opacity = 0.4;
+    scale = 0.9;
   } else {
-    // Further away items
-    opacity = 0.1; // Almost transparent
-    scale = 0.8; // Smallest
+    opacity = 0.1;
+    scale = 0.8;
   }
 
   return (
@@ -149,12 +140,6 @@ const RelatedProducts2 = () => {
     loop: true,
     align: 'center',
     slidesToScroll: 1,
-    startIndex: 0,
-    breakpoints: {
-      '(min-width: 1024px)': { slidesToScroll: 1 },
-      '(min-width: 768px) and (max-width: 1023px)': { slidesToScroll: 1 },
-      '(max-width: 767px)': { slidesToScroll: 1 },
-    },
   });
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -208,34 +193,8 @@ const RelatedProducts2 = () => {
           throw new Error("No products data received");
         }
 
-        // Transform Shopify data to our Product interface
         const transformedProducts = data.products.edges
-          .map((edge: { node: {
-            id: string;
-            title: string;
-            handle: string;
-            description: string;
-            images: {
-              edges: Array<{
-                node: {
-                  src: string;
-                  altText?: string;
-                };
-              }>;
-            };
-            variants: {
-              edges: Array<{
-                node: {
-                  priceV2: {
-                    amount: string;
-                    currencyCode: string;
-                  };
-                };
-              }>;
-            };
-            tags?: string[];
-            productType?: string;
-          }; }) => {
+          .map((edge: { node: any }) => {
             const node = edge.node;
             return {
               id: node.id,
@@ -248,23 +207,18 @@ const RelatedProducts2 = () => {
               productType: node.productType
             };
           })
-          .filter((product: { image: string; price: string | string[]; }) => {
-            // Filter out products without images or prices
+          .filter((product: { image: string; price: string }) => {
             if (!product.image || product.image === "/images/placeholder.jpg") return false;
             if (product.price.includes("N/A")) return false;
             return true;
           })
-          .slice(0, 8); // Limit to 8 products for the carousel
+          .slice(0, 8);
 
         setProducts(transformedProducts);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching products:', err);
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('An unknown error occurred');
-        }
+        setError(err instanceof Error ? err.message : 'An unknown error occurred');
         setLoading(false);
       }
     };
@@ -272,13 +226,11 @@ const RelatedProducts2 = () => {
     fetchProducts();
   }, []);
 
-  // Callback to update currentSlideIndex
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     setCurrentSlideIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
-  // Set up event listener for slide changes
   useEffect(() => {
     if (!emblaApi) return;
     emblaApi.on('select', onSelect);
@@ -288,18 +240,12 @@ const RelatedProducts2 = () => {
     };
   }, [emblaApi, onSelect]);
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white 
-                      flex flex-col items-center justify-center p-4 font-inter">
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 font-inter">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800 mx-auto mb-4"></div>
           <p className="text-lg text-gray-700">Loading products from Shopify...</p>
@@ -310,8 +256,7 @@ const RelatedProducts2 = () => {
 
   if (error || products.length === 0) {
     return (
-      <div className="min-h-screen bg-white
-                      flex flex-col items-center justify-center p-4 font-inter">
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 font-inter">
         <div className="text-center">
           <p className="text-lg text-red-600 mb-4">
             {error || "No products available"}
@@ -328,16 +273,15 @@ const RelatedProducts2 = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white
-                    flex flex-col items-center justify-center p-4 font-inter">
-                      <motion.h2
-  initial={{ opacity: 0, y: -30 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
-  className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-black my-10"
->
-  Related Products
-</motion.h2>
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 font-inter">
+      <motion.h2
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-black my-10"
+      >
+        Related Products
+      </motion.h2>
     
       <div className="w-full max-w-7xl relative">
         <div className="embla" ref={emblaRef}>
@@ -358,21 +302,19 @@ const RelatedProducts2 = () => {
         {/* Custom Navigation Arrows */}
         <button 
           className="embla__button embla__button--prev bg-gray-700 hover:bg-gray-900 text-white rounded-full p-3 shadow-lg 
-                     absolute top-1/2 -left-12 -translate-y-1/2 z-10 
-                     transition-colors duration-300 transform -translate-x-full md:translate-x-0"
+                     absolute top-1/2 -left-12 -translate-y-1/2 z-10"
           onClick={scrollPrev}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="m15 18-6-6 6-6"/>
           </svg>
         </button>
         <button 
-          className="embla__button embla__button--next bg-gray-700 hover:bg--[#b8860b] text-white rounded-full p-3 shadow-lg 
-                     absolute top-1/2 -right-12 -translate-y-1/2 z-10 
-                     transition-colors duration-300 transform translate-x-full md:translate-x-0"
+          className="embla__button embla__button--next bg-gray-700 hover:bg-gray-900 text-white rounded-full p-3 shadow-lg 
+                     absolute top-1/2 -right-12 -translate-y-1/2 z-10"
           onClick={scrollNext}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="m9 18 6-6-6-6"/>
           </svg>
         </button>

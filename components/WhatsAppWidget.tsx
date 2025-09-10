@@ -65,8 +65,11 @@ export default function WhatsAppWidget() {
               <i className="fa-brands fa-whatsapp"></i>
             </div>
             <div>
-              <h3 className="text-lg font-semibold">Chat with us</h3>
-              <p className="text-sm opacity-80">We usually reply in minutes</p>
+              <h3 className="text-lg font-semibold">Customer Support</h3>
+              <p className="text-sm opacity-80">
+Typically replies instantly
+
+</p>
             </div>
           </div>
 
@@ -74,7 +77,7 @@ export default function WhatsAppWidget() {
           <div className="flex flex-col gap-4">
             <textarea
               id="waMessage"
-              defaultValue="Salam! I’m interested in your bamboo creations. Can you assist me?"
+              defaultValue="Hi'/ Assalamu Alaikum! I’m interested in your bamboo creations. Can you assist me?"
               className="p-3 border border-gray-300 rounded-xl text-base resize-y min-h-[100px]"
             />
             <button

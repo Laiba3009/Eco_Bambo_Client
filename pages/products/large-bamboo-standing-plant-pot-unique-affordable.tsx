@@ -10,8 +10,9 @@ import RelatedProducts from "../../components/RelatedProducts";
 import { FaShippingFast } from "react-icons/fa";
 import Head from "next/head";
 import PromoBanner2 from "@/components/PromoBanner2";
-import RelatedProducts2 from "@/components/RelatedProducts2";
+import RelatedProduct2 from "@/components/RelatedProducts2";
 import ImageSlider from "../../components/ImageSlider";
+import RelatedProducts2 from "@/components/RelatedProducts2";
 
 function toTitleCase(str: string) {
   return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -271,7 +272,8 @@ export default function LargeBambooStandingPlantPotPage() {
       <PromoBanner2 />
           <ReviewCheck />
               <PlanterFAQSection />
-      <RelatedProducts2/>
+            
+      <RelatedProducts2 />
     </div>
     </>
   );

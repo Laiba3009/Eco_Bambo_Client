@@ -2,20 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 
 const Footer = () => {
-  const specialSlugs = [
-    "/products/large-bamboo-standing-plant-pot-unique-affordable",
-    "/products/small-bamboo-flower-pot-with-stand-stylish-indoor-artificial-pot",
-    "/products/1-unique-bamboo-wall-hanging-affordable-home-wall-art-decor-in-small-sizes-for-living-areas",
-    "/products/small-bamboo-hanging-with-stand-stylish-home-wall-art-decor"
-  ];
-
-  function getLinkHref(href) {
-    if (specialSlugs.some(slug => href.endsWith(slug))) {
-      return href;
-    }
-    if (href.startsWith("http")) return href;
-    return `https://ecobambo.com${href}`;
-  }
+  // All links in the footer should use the full https://ecobambo.com URL for internal links.
+  // Update all <a href=...> and <Link href=...> for internal links to use the full URL.
 
   return (
     <div className="bg-black px-0 py-4 sm:py-6 lg:py-8 font-sans text-left w-full">
@@ -218,7 +206,7 @@ const Footer = () => {
               </a>
             </li>
             <li className="list-social__item">
-              <a href="https://www.tiktok.com/@ecobambo0?_t=ZS-8uYnW51R4Sb&_r=1" className="link list-social__link text-[rgb(184,134,11,1)]" aria-label="TikTok">
+              <a href="https://www.tiktok.com/@ecobambo0?t=ZS-8uYnW51R4Sb&_r=1" className="link list-social_link text-[rgb(184,134,11,1)]" aria-label="TikTok">
                 <span className="svg-wrapper"><svg className="icon icon-tiktok w-6 h-6" viewBox="0 0 20 20"><path fill="currentColor" d="M10.511 1.705h2.74s-.157 3.51 3.795 3.768v2.711s-2.114.129-3.796-1.158l.028 5.606A5.073 5.073 0 1 1 8.213 7.56h.708v2.785a2.298 2.298 0 1 0 1.618 2.205z"></path></svg></span>
                 <span className="sr-only">TikTok</span>
               </a>
