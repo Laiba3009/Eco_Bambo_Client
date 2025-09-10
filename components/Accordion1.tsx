@@ -1,11 +1,14 @@
+"use client";
+
 import React, { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 
-const Accordion = () => {
-  const [openIndex, setOpenIndex] = useState(null);
+const Accordion1: React.FC = () => {
+  // ✅ Type fix: number | null
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const convertToHtml = (text) =>
+  const convertToHtml = (text: string) =>
     text
       .replace(/\n/g, "<br>")
       .replace(/–/g, "-")
@@ -13,32 +16,16 @@ const Accordion = () => {
       .replace(/≈/g, "~");
 
   const product = {
-    description: `Crafted from durable bamboo for long-lasting use. Enhance your garden with our large bamboo flower pot with stand — perfect for outdoor pots and planters. Designed for large flower pots, it adds elegance to any space. Ideal for flower pots for outside. 
-Key Features:
-• Best container plants for your space
-• Premium quality for those looking to buy plant pots
-• Perfect for flower pots for sale seekers
-• Versatile choice for any setting
-• Made with Dracaena Lucky Bamboo
-• Free from harmful weather effects
-• Easy on the pocket
-• Made from sustainable bamboo with a natural look
-Indoor Use:
-• Long-lasting quality for indoor decor
-• Suitable for all seasons
-• Lightweight, durable & eco-friendly`, 
-    specification: `Product Name:Bamboo Flower Pot - Perfect for Home & Garden
-Material:100% sustainable, hand-woven bamboo (stronger than plastic alternatives)
-Finish & Protection:UV-stable varnish, waterproof sealant, anti-insect chemical treatment (longer life, high gloss)
-Weather Resistance:Fade-proof colour; safe from rain, sun (-5°C to 45°C) and high humidity
-Dimensions / Size Options:Ø 18 cm x H 32 cm (Large),
-Colour Choices:Natural Bamboo, Honey, Caramel ,Red , Yellow , Half White
-Package Includes:1 x Bamboo Planter, 1 x Detachable Stand, Optional Artificial Lucky Bamboo Stems`,
-    warrantySupport: `To return, email order number + issue proof (photo/video) to ecobambooarts@gmail.com.
-Items returned without approval won't be accepted.
-Inspect on delivery; report damage/defect immediately via email or +92 341 6995870.
-Used/washed items are non-returnable.
-Refunds within 10 business days after item inspection.`,
+    description: `The Large Hanging Wall planter is designed to add a natural touch of greenery to your home or office. 
+It comes with a stylish design that blends with both modern and traditional interiors. 
+Perfect for indoor or outdoor decoration, this wall hanging planter enhances any space with its unique look.`,
+    specification: `Product Name: Large Hanging Wall
+Color: Green, Natural
+Size: W 15 cm × H 44 cm
+Package Includes: 1 Plant Leaf, 1 Stick`,
+    warrantySupport: `Returns are accepted within 7 days of delivery in case of manufacturing defects or damage.
+Contact: support@example.com with order number and issue proof (photo/video).
+Used or modified items are non-returnable.`,
   };
 
   const sections = [
@@ -47,13 +34,13 @@ Refunds within 10 business days after item inspection.`,
     { title: "Warranty & Support", content: product.warrantySupport },
   ];
 
-  const toggleSection = (index) => {
+  const toggleSection = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  // ✅ Convert specification string to an array of key-value pairs
-  const parseSpecification = (specText) => {
-    return specText.split("\n").map((line) => {
+  // ✅ Type fix: string → parsed as { key, value }
+  const parseSpecification = (specText: string) => {
+    return specText.split("\n").map((line: string) => {
       const [key, ...rest] = line.split(":");
       return {
         key: key.trim(),
@@ -63,16 +50,14 @@ Refunds within 10 business days after item inspection.`,
   };
 
   return (
-    <div className="my-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-4">
+    <div className="my-8 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto space-y-4">
       {sections.map((section, index) => {
         const isOpen = openIndex === index;
 
         return (
           <div
             key={index}
-            className={`group transition-all duration-200 px-3 py-4 rounded-xl shadow-sm ${
-              index !== 0 ? "" : ""
-            } bg-white hover:bg-gray-50`}
+            className="group transition-all duration-200 px-3 py-4 rounded-xl shadow-sm bg-white hover:bg-gray-50"
           >
             <button
               className="flex items-center justify-between w-full text-left text-[17px] sm:text-lg font-semibold text-gray-900"
@@ -93,15 +78,17 @@ Refunds within 10 business days after item inspection.`,
                   transition={{ duration: 0.4, ease: "easeInOut" }}
                   className="overflow-hidden mt-3"
                 >
-                  {/* ✅ Render table for Specification */}
+                  {/* ✅ Specification Table */}
                   {section.title === "Specification" ? (
                     <div className="overflow-x-auto">
-                      <table className="min-w-full text-sm text-gray-700 rounded-lg overflow-hidden">
+                      <table className="min-w-full text-sm text-gray-700 rounded-lg overflow-hidden border">
                         <tbody>
                           {parseSpecification(section.content).map(({ key, value }, idx) => (
-                            <tr key={idx}>
-                              <td className="px-4 py-2 font-semibold  w-1/3">{key}</td>
-                              <td className="px-4 py-2 ">{value}</td>
+                            <tr key={idx} className="border-b">
+                              <td className="px-4 py-2 font-semibold w-1/3 bg-gray-50">
+                                {key}
+                              </td>
+                              <td className="px-4 py-2">{value}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -123,4 +110,4 @@ Refunds within 10 business days after item inspection.`,
   );
 };
 
-export default Accordion;
+export default Accordion1;

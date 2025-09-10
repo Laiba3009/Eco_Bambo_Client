@@ -71,7 +71,8 @@ const PromoBanner = () => {
 
         {/* Desktop Left Large Image */}
         <motion.a
-          href="https://ecobambo.com/products/small-bamboo-flower-pot-with-stand-stylish-indoor-artificial-pot"
+          href= "/products/large-bamboo-standing-plant-pot-unique-affordable"
+
           target="_blank"
           rel="noopener noreferrer"
           variants={slideInVariant}
@@ -83,7 +84,7 @@ const PromoBanner = () => {
           style={{ textDecoration: 'none' }}
         >
           <img
-            src="/images/b-g1.png"
+            src="/images/pot-banner.jpg"
             alt="Banner 1"
             className="w-full h-full  object-cover transition-transform duration-500 group-hover:scale-105"
           />
@@ -96,7 +97,7 @@ const PromoBanner = () => {
         <div className="hidden md:flex md:col-span-2 flex-col gap-1 h-[660px]">
           {/* Top right image */}
           <motion.a
-            href="https://ecobambo.com/products/small-bamboo-hanging-with-stand-stylish-home-wall-art-decor"
+            href="https://ecobambo.com/products/1-unique-bamboo-wall-hanging-affordable-home-wall-art-decor-in-small-sizes-for-living-areas"
             target="_blank"
             rel="noopener noreferrer"
             custom={1}
@@ -118,7 +119,7 @@ const PromoBanner = () => {
           </motion.a>
           {/* Bottom right image */}
           <motion.a
-            href="https://ecobambo.com/products/1-unique-bamboo-wall-hanging-affordable-home-wall-art-decor-in-small-sizes-for-living-areas"
+           href=  "https://ecobambo.com/products/small-bamboo-hanging-with-stand-stylish-home-wall-art-decor"
             target="_blank"
             rel="noopener noreferrer"
             custom={2}
@@ -130,7 +131,7 @@ const PromoBanner = () => {
             style={{ textDecoration: 'none' }}
           >
             <img
-              src="/images/pot-banner.jpg"
+              src="/images/image1.png"
               alt="Banner 3"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />

@@ -13,6 +13,7 @@ import PromoBanner2 from "@/components/PromoBanner2";
 import RelatedProduct2 from "@/components/RelatedProducts2";
 import ImageSlider from "../../components/ImageSlider";
 import RelatedProducts2 from "@/components/RelatedProducts2";
+import FeatureHighlights from "@/components/FeatureHighlights";
 
 function toTitleCase(str: string) {
   return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -272,8 +273,8 @@ export default function LargeBambooStandingPlantPotPage() {
       <PromoBanner2 />
           <ReviewCheck />
               <PlanterFAQSection />
-            
       <RelatedProducts2 />
+      <FeatureHighlights />
     </div>
     </>
   );

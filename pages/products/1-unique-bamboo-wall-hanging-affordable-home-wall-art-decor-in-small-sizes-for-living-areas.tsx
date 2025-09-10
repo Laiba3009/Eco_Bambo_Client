@@ -6,7 +6,6 @@ import Head from "next/head";
 import { shopifyFetch } from "../../lib/shopify";
 import AddToCart from "../../components/AddToCart";
 import TextSlider from "../../components/TextSlider";
-import Accordion from "../../components/Accordion";
 import DynamicTutorialSection from "../../components/DynamicTutorialSection";
 import PromoBanner1 from "../../components/PromoBanner1";
 import FAQSection from "../../components/FAQ";
@@ -15,6 +14,7 @@ import FeatureHighlights from "../../components/FeatureHighlights";
 import RelatedProducts from "../../components/RelatedProducts";
 import ReviewCheck from "@/components/ReviewCheck";
 import RelatedProducts4 from "@/components/RelatedProducts4";
+import Accordion1 from "@/components/Accordion1";
 
 function toTitleCase(str: string) {
   return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -269,7 +269,7 @@ export default function BambooWallHangingPage() {
       </div>
       
       {/* Accordion Section */}
-      <Accordion />
+      <Accordion1 />
       
       {/* Text Slider */}
       <TextSlider />

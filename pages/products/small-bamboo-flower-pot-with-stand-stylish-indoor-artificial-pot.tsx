@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { shopifyFetch } from "../../lib/shopify";
 import AddToCart from "../../components/AddToCart";
 import TextSlider from "../../components/TextSlider";
-import Accordion from "../../components/Accordion";
+import Accordion2 from "../../components/Accordion2";
 import DynamicTutorialSection from "../../components/DynamicTutorialSection";
 import PromoBanner from "../../components/PromoBanner";
 import RelatedProducts from "../../components/RelatedProducts";
@@ -13,6 +13,7 @@ import ImageSlider from "../../components/ImageSlider";
  
 import ReviewCheck from "@/components/ReviewCheck";
 import RelatedProducts3 from "@/components/RelatedProducts3";
+import FeatureHighlights from "@/components/FeatureHighlights";
 
 function toTitleCase(str: string) {
   return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -274,7 +275,7 @@ export default function SmallBambooFlowerPotPage() {
       </div>
       
       {/* Accordion Section */}
-      <Accordion />
+      <Accordion2 />
       
       {/* Text Slider */}
       <TextSlider />
@@ -290,6 +291,7 @@ export default function SmallBambooFlowerPotPage() {
       <ReviewCheck />  
        <FlowerPotFAQSection />
       <RelatedProducts3/>
+      <FeatureHighlights />
     </div>
     </>
   );

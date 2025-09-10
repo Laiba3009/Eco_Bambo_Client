@@ -74,9 +74,9 @@ const App = () => {
     },
     {
       id: 2,
-      src: "/images/pot-banner.jpg",
+      src: "/images/b-g2.png",
       alt: "Bamboo Hanging Decor",
-      link: "https://ecobambo.com/products/large-bamboo-standing-plant-pot-unique-affordable",
+      link: "https://ecobambo.com/products/small-bamboo-hanging-with-stand-stylish-home-wall-art-decor",
       buttonText: "Shop Now",
     },
     {
