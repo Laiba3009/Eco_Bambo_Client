@@ -91,43 +91,71 @@ const Footer = () => {
             Want a faster reply? Tap the WhatsApp button to chat directly with our support team.<br />
             Or fill out this product inquiry form with your details & selected collection. Also, paste the exact product title in the message box — so our team can guide you faster with price, customization & size.
           </h3>
-          <form method="post" action="/contact#contact_form" id="contact_form" acceptCharset="UTF-8" className="space-y-2 sm:space-y-4">
-            <input type="hidden" name="form_type" value="contact" />
-            <input type="hidden" name="utf8" value="✓" />
+          <form
+  onSubmit={async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+      first_name: form["contact[first_name]"].value,
+      last_name: form["contact[last_name]"].value,
+      location: form["contact[location]"].value,
+      phone: form["contact[phone]"].value,
+      email: form["contact[email]"].value,
+      collection: form["contact[collection]"].value,
+      message: form["contact[body]"].value,
+    };
 
-            <input type="text" name="contact[first_name]" placeholder="First Name*" required className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2 focus:outline-none focus:border-white focus:text-[rgb(184,134,11,1)] placeholder:text-white hover:border-white" />
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-            <input type="text" name="contact[last_name]" placeholder="Last Name*" required className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2 focus:outline-none focus:border-white focus:text-[rgb(184,134,11,1)] placeholder:text-white hover:border-white" />
+      if (res.ok) {
+        alert("✅ Message sent successfully!");
+        form.reset();
+      } else {
+        const error = await res.json();
+        alert("❌ Failed to send: " + error.error);
+      }
+    } catch (err) {
+      alert("⚠️ Something went wrong. Try again later.");
+      console.error(err);
+    }
+  }}
+  className="space-y-2 sm:space-y-4"
+>
+  <input type="text" name="contact[first_name]" placeholder="First Name*" required className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2" />
+  <input type="text" name="contact[last_name]" placeholder="Last Name*" required className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2" />
+  <input type="text" name="contact[location]" placeholder="Your Location*" required className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2" />
+  <input type="text" name="contact[phone]" placeholder="Phone Number*" required className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2" />
+  <input type="email" name="contact[email]" placeholder="Email*" required className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2" />
 
-            <input type="text" name="contact[location]" placeholder="Your Location*" required className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2 focus:outline-none focus:border-white focus:text-[rgb(184,134,11,1)] placeholder:text-white hover:border-white" />
+  <select name="contact[collection]" required className="w-full bg-[#181818] text-amber-400 border border-[#333] rounded px-4 py-2">
+    <option value="">Select Collection</option>
+    <option>Bamboo Flower pot</option>
+    <option>Bamboo Hanging Wall</option>
+    <option>Bamboo House</option>
+    <option>Bamboo Gazebo</option>
+    <option>Bamboo Canopy</option>
+    <option>Bamboo Car garage</option>
+    <option>Bamboo Fences</option>
+    <option>Bamboo Wall Panel</option>
+    <option>Bamboo Pot Stands</option>
+    <option>Dining Table Set</option>
+    <option>Baby Beds</option>
+    <option>Kid's Furniture</option>
+    <option>Bamboo Double & Single Beds</option>
+    <option>Bamboo Sofa Set</option>
+    <option>Bamboo Swings</option>
+    <option>Bamboo Baby Swings</option>
+  </select>
 
-            <input type="text" name="contact[phone]" placeholder="Phone Number*" required className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2 focus:outline-none focus:border-white focus:text-[rgb(184,134,11,1)] placeholder:text-white hover:border-white" />
+  <textarea name="contact[body]" placeholder="Your Message (Optional)" rows="4" className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2"></textarea>
+  <button type="submit" className="text-black font-semibold px-6 py-2 rounded shadow bg-[#F5C240]">BOOK NOW →</button>
+</form>
 
-            <input type="email" name="contact[email]" placeholder="Email*" required className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2 focus:outline-none focus:border-white focus:text-[rgb(184,134,11,1)] placeholder:text-white hover:border-white" />
-
-            <select name="contact[collection]" required className="w-full bg-[#181818] text-amber-400 border border-[#333] rounded px-4 py-2 focus:outline-none focus:border-amber-400">
-              <option value="" className="text-amber-300">Select Collection</option>
-              <option>Bamboo Flower pot</option>
-              <option>Bamboo Hanging Wall</option>
-              <option>Bamboo House</option>
-              <option>Bamboo Gazebo</option>
-              <option>Bamboo Canopy</option>
-              <option>Bamboo Car garage</option>
-              <option>Bamboo Fences</option>
-              <option>Bamboo Wall Panel</option>
-              <option>Bamboo Pot Stands</option>
-              <option>Dining Table Set</option>
-              <option>Baby Beds</option>
-              <option>Kid's Furniture</option>
-              <option>Bamboo Double & Single Beds</option>
-              <option>Bamboo Sofa Set</option>
-              <option>Bamboo Swings</option>
-              <option>Bamboo Baby Swings</option>
-            </select>
-
-            <textarea name="contact[body]" placeholder="Your Message (Optional)" rows="4" className="w-full bg-[#181818] text-[rgb(184,134,11,1)] border border-[#333] rounded px-4 py-2 focus:outline-none focus:border-white focus:text-[rgb(184,134,11,1)] placeholder:text-white hover:border-white"></textarea>
-            <button type="submit" className=" text-black font-semibold px-6 py-2 rounded shadow bg-[#F5C240] transition-all">BOOK NOW →</button>
-          </form>
         </div>
       </div>
 
@@ -206,7 +234,7 @@ const Footer = () => {
               </a>
             </li>
             <li className="list-social__item">
-              <a href="https://www.tiktok.com/@ecobambo0?t=ZS-8uYnW51R4Sb&_r=1" className="link list-social_link text-[rgb(184,134,11,1)]" aria-label="TikTok">
+              <a href="https://www.tiktok.com/@ecobambo0?_t=ZS-8uYnW51R4Sb&_r=1" className="link list-social__link text-[rgb(184,134,11,1)]" aria-label="TikTok">
                 <span className="svg-wrapper"><svg className="icon icon-tiktok w-6 h-6" viewBox="0 0 20 20"><path fill="currentColor" d="M10.511 1.705h2.74s-.157 3.51 3.795 3.768v2.711s-2.114.129-3.796-1.158l.028 5.606A5.073 5.073 0 1 1 8.213 7.56h.708v2.785a2.298 2.298 0 1 0 1.618 2.205z"></path></svg></span>
                 <span className="sr-only">TikTok</span>
               </a>
