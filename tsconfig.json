@@ -17,6 +17,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Reviews.jsx", "types/**/*.d.ts", "components/AddToCart.jsx", "components/Accordion.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Reviews.jsx", "types/**/*.d.ts", "components/AddToCart.jsx", "components/Accordion.jsx", "components/Footer.jsx"],
   "exclude": ["node_modules"]
 }
