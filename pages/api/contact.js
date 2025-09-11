@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
     await resend.emails.send({
       from: "Eco Bambo Contact <onboarding@resend.dev>", // You can replace this with your verified sender
-      to: "ecobambooarts@gmail.com", // Your receiving email
+      to: "ibaduddinsiddiqui418@gmail.com", // Your receiving email
       subject: `New Inquiry from ${first_name} ${last_name}`,
       html: `
         <h2>New Inquiry from Eco Bambo Website</h2>
