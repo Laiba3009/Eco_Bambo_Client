@@ -5,7 +5,6 @@ import TextSlider from "../../components/TextSlider";
 import Accordion2 from "../../components/Accordion2";
 import DynamicTutorialSection from "../../components/DynamicTutorialSection";
 import PromoBanner from "../../components/PromoBanner";
-import RelatedProducts from "../../components/RelatedProducts";
 import { FaShippingFast } from "react-icons/fa";
 import Head from "next/head";
  import FlowerPotFAQSection from "../../components/FAQ_2";
@@ -284,7 +283,6 @@ export default function SmallBambooFlowerPotPage() {
       <DynamicTutorialSection productHandle={product.handle} productTitle={product.title} />
           
       {/* Related Products Section */}
-      <RelatedProducts currentProduct={product} />
 
       {/* Additional Sections */}
       <PromoBanner />

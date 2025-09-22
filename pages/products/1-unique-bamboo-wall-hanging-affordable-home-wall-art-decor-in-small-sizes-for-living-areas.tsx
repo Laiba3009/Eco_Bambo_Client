@@ -11,7 +11,6 @@ import PromoBanner1 from "../../components/PromoBanner1";
 import FAQSection from "../../components/FAQ";
 import ImageSlider from "../../components/ImageSlider";
 import FeatureHighlights from "../../components/FeatureHighlights";
-import RelatedProducts from "../../components/RelatedProducts";
 import ReviewCheck from "@/components/ReviewCheck";
 import RelatedProducts4 from "@/components/RelatedProducts4";
 import Accordion1 from "@/components/Accordion1";
@@ -262,8 +261,10 @@ export default function BambooWallHangingPage() {
             </div>
             <p className="text-sm text-gray-700">{selectedVariant?.color}</p>
 
-            {/* Add to Cart Component */}
-            <AddToCart product={productData} selectedVariant={selectedVariant} />
+             <AddToCart product={productData} selectedVariant={selectedVariant} />
+
+            {/* Add to Cart Component */} 
+
           </div>
         </div>
       </div>
@@ -278,7 +279,6 @@ export default function BambooWallHangingPage() {
       <DynamicTutorialSection productHandle={product.handle} productTitle={product.title} />
           
       {/* Related Products Section */}
-      <RelatedProducts currentProduct={product} />
 
       {/* Additional Sections */}
       <PromoBanner1 />

@@ -230,7 +230,7 @@ export default function Header() {
         <>
           {/* Gold announcement bar stays visible */}
           <div className="w-full bg-[#B8860B] flex items-center border-b h-12 border-[rgba(184,134,11,0.15)]">
-            <div className="max-w-[130rem] mx-auto flex items-center justify-between px-4 py-1 w-full h-12 items-center">
+            <div className="max-w-[130rem] mx-auto flex justify-between px-4 py-1 w-full h-12 items-center">
               <ul className="hidden lg:flex gap-4 items-center h-full">
                 {socialLinks.map((s) => (
                   <li key={s.label}>
@@ -321,7 +321,7 @@ export default function Header() {
           {/* Utility Bar */}
           {showGoldBar && (
             <div className="w-full bg-[#B8860B] flex items-center border-b h-12 border-[rgba(184,134,11,0.15)] fixed top-0 left-0 z-[60] transition-all duration-300">
-              <div className="max-w-[130rem] mx-auto flex items-center justify-between px-4 py-1 w-full h-12 items-center">
+              <div className="max-w-[130rem] mx-auto flex  justify-between px-4 py-1 w-full h-12 items-center">
                 {/* Social Icons - always left */}
                 <ul className="hidden lg:flex gap-4 items-center h-full ">
                   {socialLinks.map((s) => (

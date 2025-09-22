@@ -6,7 +6,6 @@ import Accordion from "../../components/Accordion";
 import DynamicTutorialSection from "../../components/DynamicTutorialSection";
 import ReviewCheck from "@/components/ReviewCheck";
 import PlanterFAQSection from "../../components/FAQ_1";
-import RelatedProducts from "../../components/RelatedProducts";
 import { FaShippingFast } from "react-icons/fa";
 import Head from "next/head";
 import PromoBanner2 from "@/components/PromoBanner2";
@@ -266,9 +265,7 @@ export default function LargeBambooStandingPlantPotPage() {
       {/* Dynamic Tutorial Section */}
       <DynamicTutorialSection productHandle={product.handle} productTitle={product.title} />
           
-      {/* Related Products Section */}
-      <RelatedProducts currentProduct={product} />
-
+    
       {/* Additional Sections */}
       <PromoBanner2 />
           <ReviewCheck />
