@@ -17,6 +17,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Reviews.jsx", "types/**/*.d.ts", "components/AddToCart.jsx", "components/Accordion.jsx", "components/Footer.jsx", "context/CartContext.tsx", "components/Header.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Reviews.jsx", "types/**/*.d.ts", "components/AddToCart.jsx", "components/Accordion.jsx", "components/Footer.jsx", "context/CartContext.tsx", "components/Header.jsx", "components/FSlider.jsx"],
   "exclude": ["node_modules"]
 }

@@ -12,8 +12,8 @@ const FSlider = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [touchStartX, setTouchStartX] = useState(null);
-  const [touchEndX, setTouchEndX] = useState(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
 
   // GraphQL query to fetch products
   const PRODUCTS_QUERY = `
@@ -60,7 +60,7 @@ const FSlider = () => {
           variables: { first: 12 },
         });
         
-        const fetchedProducts = data.products.edges.map(edge => ({
+        const fetchedProducts = data.products.edges.map((edge ) => ({
           id: edge.node.id,
           title: edge.node.title,
           handle: edge.node.handle,
@@ -77,7 +77,7 @@ const FSlider = () => {
         setLoading(false);
       } catch (err) {
         console.error('Error fetching products:', err);
-        setError(err.message);
+        setError(null);
         setLoading(false);
       }
     };
@@ -198,9 +198,9 @@ const FSlider = () => {
       {/* Product Slider with AnimatePresence */}
       <div
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        onTouchStart={(e) => handleTouchStart(e)}
+        onTouchMove={(e) => handleTouchMove(e)}
+        onTouchEnd={(e) => handleTouchEnd(e)}
       >
         <AnimatePresence mode="sync">
           {visibleItems.map((product, index) => (
