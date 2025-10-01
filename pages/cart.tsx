@@ -3,11 +3,17 @@ import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/router";
 
 export default function CartPage() {
-  const { cart, removeFromCart } = useCart();
+  const cartContext = useCart();
   const router = useRouter();
 
+  if (!cartContext) {
+    return <div className="p-10 text-center">🛒 Cart is unavailable</div>;
+  }
+
+  const { cart, removeFromCart } = cartContext;
+
   const handleCheckout = async () => {
-    const lineItems = cart.map(item => ({
+    const lineItems = cart.map((item: any) => ({
       variantId: item.variantId,
       quantity: item.quantity
     }));

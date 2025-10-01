@@ -140,7 +140,7 @@ function Reviews(): JSX.Element {
       <motion.h2
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: [1, 1.1, 1] }}
-        transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity }}
+        transition={{ duration: 1.5, ease: [0.42, 0, 0.58, 1], repeat: Infinity }}
         className="text-xl sm:text-2xl md:text-4xl font-semibold text-center mb-8 text-black"
       >
         Customer Reviews

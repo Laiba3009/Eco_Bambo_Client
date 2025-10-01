@@ -1,11 +1,22 @@
- import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import GuideImage from "./GuideImage";
 
+type TutorialStep = {
+  image: string;
+  title: string;
+  description: string;
+};
+
 // Step Item
-const StepItem = ({ step, index, onVisibleChange, isVisible }) => {
-  const ref = useRef();
-  const inView = useInView(ref, { threshold: 0.5 });
+const StepItem = ({ step, index, onVisibleChange, isVisible }: {
+  step: TutorialStep;
+  index: number;
+  onVisibleChange: (index: number, isVisible: boolean) => void;
+  isVisible: boolean;
+}) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { amount: 0.5 });
   const controls = useAnimation();
 
   useEffect(() => {
@@ -19,7 +30,7 @@ const StepItem = ({ step, index, onVisibleChange, isVisible }) => {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.25, ease: "easeOut" },
+      transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] },
     },
   };
 
@@ -28,7 +39,7 @@ const StepItem = ({ step, index, onVisibleChange, isVisible }) => {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.25, ease: "easeOut" },
+      transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] },
     },
   };
 
@@ -59,7 +70,14 @@ const StepItem = ({ step, index, onVisibleChange, isVisible }) => {
       <motion.div
         initial="hidden"
         animate={controls}
-        variants={imageAnimation}
+        variants={{
+          hidden: { opacity: 0, x: index % 2 === 0 ? -200 : 200 },
+          visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.25, ease: "easeInOut" },
+          },
+        }}
         className={`relative z-20 w-full md:w-1/2 ${
           index % 2 === 0 ? "order-1 md:order-1" : "order-1 md:order-2"
         }`}
@@ -75,7 +93,14 @@ const StepItem = ({ step, index, onVisibleChange, isVisible }) => {
       <motion.div
         initial="hidden"
         animate={controls}
-        variants={textAnimation}
+        variants={{
+          hidden: { opacity: 0, x: index % 2 === 0 ? 200 : -200 },
+          visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.25, ease: "easeInOut" },
+          },
+        }}
         className={`relative z-20 w-full md:w-1/2 ${
           index % 2 === 0 ? "order-2 md:order-2" : "order-2 md:order-1"
         }`}
@@ -96,8 +121,8 @@ const StepItem = ({ step, index, onVisibleChange, isVisible }) => {
 
 // Main Component
 const StepTutorial = () => {
-  const [steps, setSteps] = useState([]);
-  const [visibleSteps, setVisibleSteps] = useState({});
+  const [steps, setSteps] = useState<TutorialStep[]>([]);
+  const [visibleSteps, setVisibleSteps] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     fetch("/data/product.json")
@@ -107,7 +132,7 @@ const StepTutorial = () => {
       });
   }, []);
 
-  const handleVisibleChange = (index, isVisible) => {
+  const handleVisibleChange = (index: number, isVisible: boolean) => {
     setVisibleSteps((prev) => {
       if (prev[index] === isVisible) return prev;
       return { ...prev, [index]: isVisible };

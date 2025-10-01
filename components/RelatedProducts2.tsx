@@ -124,7 +124,7 @@ const AnimatedProductCard: React.FC<AnimatedProductCardProps> = ({ product, inde
     <motion.div
       className="flex justify-center items-center h-full"
       style={{ opacity, scale }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
     >
       <ProductCard product={product} />
     </motion.div>
@@ -277,7 +277,7 @@ const RelatedProducts2 = () => {
       <motion.h2
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-black my-10"
       >
         Related Products

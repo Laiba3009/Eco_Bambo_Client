@@ -10,7 +10,7 @@ const VideoPlayer = () => {
     const iframe = iframeRef.current;
     if (!iframe) return;
 
-    iframe.contentWindow.postMessage(
+    (iframe as HTMLIFrameElement).contentWindow?.postMessage(
       JSON.stringify({
         event: "command",
         func: isMuted ? "unMute" : "mute",
@@ -34,7 +34,7 @@ const VideoPlayer = () => {
         ref={titleRef}
         initial={{ opacity: 0, y: 30 }}
         animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="text-[24px] md:text-[28px] font-bold text-[#000000] font-dm"
       >
         Best Plants for Bedroom Setup Tutorial – Watch & Learn!

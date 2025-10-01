@@ -91,7 +91,7 @@ Refunds within 10 business days after item inspection.`,
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  transition={{ duration: 0.4, ease: [0.42, 0, 0.58, 1] }}
                   className="overflow-hidden mt-3"
                 >
                   {/* ✅ Specification Table */}

@@ -1,9 +1,9 @@
 import React from "react";
 import Typewriter from "typewriter-effect";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 // Animation Variants
-const slideInVariant = {
+const slideInVariant: Variants = {
   hidden: { opacity: 0, x: 100 },
   visible: (i = 0) => ({
     opacity: 1,
@@ -11,7 +11,7 @@ const slideInVariant = {
     transition: {
       delay: i * 0.2,
       duration: 0.7,
-      ease: "easeOut",
+      ease: [0.16, 1, 0.3, 1],
     },
   }),
 };

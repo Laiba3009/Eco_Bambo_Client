@@ -1,9 +1,25 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-const CartContext = createContext();
+type CartItem = {
+  product: any;
+  variantId: string;
+  quantity: number;
+};
 
-export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+type CartContextType = {
+  cart: CartItem[];
+  addToCart: (product: any, variantId: string, quantity: number) => void;
+  removeFromCart: (variantId: string) => void;
+};
+
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+type CartProviderProps = {
+  children: ReactNode;
+};
+
+export const CartProvider = ({ children }: CartProviderProps) => {
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   // ✅ Save in localStorage
   useEffect(() => {
@@ -17,7 +33,7 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (product, variantId, quantity) => {
+  const addToCart = (product: any, variantId: string, quantity: number) => {
     setCart((prevCart) => {
       const existing = prevCart.find((item) => item.variantId === variantId);
       if (existing) {
@@ -31,7 +47,7 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  const removeFromCart = (variantId) => {
+  const removeFromCart = (variantId: string) => {
     setCart((prevCart) => prevCart.filter((item) => item.variantId !== variantId));
   };
 
