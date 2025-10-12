@@ -8,8 +8,24 @@ export default async function handler(req, res) {
     }
   
     try {
-      const { variantId, quantity = 1, cartId } = req.body || {};
-      if (!variantId) return res.status(400).json({ ok: false, error: "variantId required in request body" });
+      // Handle both JSON and form-encoded data
+      let variantId, quantity = 1, cartId;
+      
+      if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+        // Parse form data
+        const params = new URLSearchParams(req.body);
+        variantId = params.get('id') || params.get('items[][id]');
+        quantity = parseInt(params.get('quantity') || params.get('items[][quantity]') || '1');
+        cartId = params.get('cartId');
+      } else {
+        // Parse JSON data
+        const body = req.body || {};
+        variantId = body.variantId || body.id;
+        quantity = body.quantity || 1;
+        cartId = body.cartId;
+      }
+      
+      if (!variantId) return res.status(400).json({ ok: false, error: "variantId/id required in request body" });
   
       const SHOPIFY_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
       const STOREFRONT_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;

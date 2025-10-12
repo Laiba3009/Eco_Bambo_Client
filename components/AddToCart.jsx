@@ -26,7 +26,15 @@ function toNumericVariantId(id) {
  * This ensures the cart cookie is properly set and shared between domains.
  */
 async function submitToShopifyProxy(numericVariantId, quantity = 1) {
-  const proxyUrl = `https://${SHOPIFY_DOMAIN}/apps/eco/cart/add`;
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  
+  // In development, use direct API call to our Next.js API
+  // In production, use the Shopify App Proxy
+  const proxyUrl = isDevelopment 
+    ? '/api/cart/add'  // Direct API call in development
+    : `https://${SHOPIFY_DOMAIN}/apps/eco/cart/add`;  // App Proxy in production
+  
+  console.log(`[AddToCart] Using ${isDevelopment ? 'development' : 'production'} endpoint:`, proxyUrl);
   
   const formData = new URLSearchParams();
   formData.append('id', String(numericVariantId));
@@ -36,17 +44,29 @@ async function submitToShopifyProxy(numericVariantId, quantity = 1) {
   formData.append('items[][id]', String(numericVariantId));
   formData.append('items[][quantity]', String(quantity));
 
-  const response = await fetch(proxyUrl, {
+  const fetchOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: formData.toString(),
-    credentials: 'include', // Important: include cookies for session sharing
-  });
+  };
+
+  // Only add credentials for production (App Proxy)
+  if (!isDevelopment) {
+    fetchOptions.credentials = 'include';
+  }
+
+  const response = await fetch(proxyUrl, fetchOptions);
 
   if (!response.ok) {
     const errorText = await response.text();
+    console.error(`[AddToCart] Request failed:`, {
+      status: response.status,
+      statusText: response.statusText,
+      url: proxyUrl,
+      error: errorText
+    });
     throw new Error(`Cart add failed: ${response.status} ${errorText}`);
   }
 
@@ -56,6 +76,7 @@ async function submitToShopifyProxy(numericVariantId, quantity = 1) {
     throw new Error(result.error);
   }
 
+  console.log('[AddToCart] Success:', result);
   return result;
 }
 

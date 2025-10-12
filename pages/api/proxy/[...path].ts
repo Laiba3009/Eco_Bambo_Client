@@ -3,12 +3,28 @@ import crypto from 'crypto';
 
 // Shopify App Proxy handler with HMAC verification and cart session forwarding
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Set CORS headers for all requests
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   try {
-    // Verify HMAC signature for security
-    const isValidRequest = verifyShopifyProxyRequest(req);
-    if (!isValidRequest) {
-      console.error('[PROXY] Invalid HMAC signature');
-      return res.status(401).json({ error: 'Unauthorized' });
+    // Verify HMAC signature for security (only in production)
+    const isProduction = process.env.NODE_ENV === 'production';
+    if (isProduction) {
+      const isValidRequest = verifyShopifyProxyRequest(req);
+      if (!isValidRequest) {
+        console.error('[PROXY] Invalid HMAC signature');
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+    } else {
+      console.log('[PROXY] Development mode - skipping HMAC verification');
     }
 
     const { path } = req.query;
