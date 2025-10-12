@@ -28,9 +28,9 @@ function toNumericVariantId(id) {
 async function submitToShopifyProxy(numericVariantId, quantity = 1) {
   const isDevelopment = process.env.NODE_ENV === 'development';
   
-  // Use our Next.js API endpoint for cart operations
-  // The Shopify App Proxy is mainly for server-to-server communication
-  const proxyUrl = '/api/cart/add';
+  // Use direct Shopify cart/add.js endpoint via our API
+  // This adds items directly to the customer's cart (not headless)
+  const proxyUrl = '/api/cart/add-direct';
   
   console.log(`[AddToCart] Using ${isDevelopment ? 'development' : 'production'} endpoint:`, proxyUrl);
   
@@ -73,6 +73,20 @@ async function submitToShopifyProxy(numericVariantId, quantity = 1) {
   }
 
   console.log('[AddToCart] Success:', result);
+  
+  // Debug: Log cart details
+  if (result.cart) {
+    console.log('[AddToCart] Cart details:', {
+      itemCount: result.cart.item_count,
+      totalPrice: result.cart.total_price,
+      items: result.cart.items?.map(item => ({
+        id: item.variant_id,
+        title: item.product_title,
+        quantity: item.quantity
+      }))
+    });
+  }
+  
   return result;
 }
 
