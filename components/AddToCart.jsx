@@ -22,72 +22,66 @@ function toNumericVariantId(id) {
 // We avoid cross-origin reads. We only submit and let Shopify set/update its cart cookie.
 
 /**
- * Submit to Shopify via App Proxy to maintain cart session and avoid CORS issues.
- * This ensures the cart cookie is properly set and shared between domains.
+ * Submit to Shopify using redirect method - most reliable for cart persistence
+ * This creates a form and submits it directly to Shopify, maintaining session
  */
-async function submitToShopifyProxy(numericVariantId, quantity = 1) {
-  const isDevelopment = process.env.NODE_ENV === 'development';
+function submitToShopifyCart(numericVariantId, quantity = 1) {
+  const SHOPIFY_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || "ecobambo.com";
   
-  // Use direct Shopify cart/add.js endpoint via our API
-  // This adds items directly to the customer's cart (not headless)
-  const proxyUrl = '/api/cart/add-direct';
-  
-  console.log(`[AddToCart] Using ${isDevelopment ? 'development' : 'production'} endpoint:`, proxyUrl);
-  
-  const formData = new URLSearchParams();
-  formData.append('id', String(numericVariantId));
-  formData.append('quantity', String(quantity));
-  
-  // Also include items[] format for compatibility
-  formData.append('items[][id]', String(numericVariantId));
-  formData.append('items[][quantity]', String(quantity));
+  console.log(`[AddToCart] Adding to Shopify cart via redirect:`, {
+    variantId: numericVariantId,
+    quantity: quantity,
+    domain: SHOPIFY_DOMAIN
+  });
 
-  const fetchOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: formData.toString(),
-  };
+  // Create a hidden form and submit it to Shopify
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = `https://${SHOPIFY_DOMAIN}/cart/add`;
+  form.target = "_blank"; // Open in new tab to avoid navigation
+  form.style.display = "none";
 
-  // Note: Removed credentials for now to avoid CORS issues
-  // The Shopify App Proxy should handle session management
+  // Add variant ID
+  const idField = document.createElement("input");
+  idField.type = "hidden";
+  idField.name = "id";
+  idField.value = String(numericVariantId);
+  form.appendChild(idField);
 
-  const response = await fetch(proxyUrl, fetchOptions);
+  // Add quantity
+  const qtyField = document.createElement("input");
+  qtyField.type = "hidden";
+  qtyField.name = "quantity";
+  qtyField.value = String(quantity);
+  form.appendChild(qtyField);
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error(`[AddToCart] Request failed:`, {
-      status: response.status,
-      statusText: response.statusText,
-      url: proxyUrl,
-      error: errorText
-    });
-    throw new Error(`Cart add failed: ${response.status} ${errorText}`);
-  }
+  // Add items[] format for compatibility
+  const itemIdField = document.createElement("input");
+  itemIdField.type = "hidden";
+  itemIdField.name = "items[][id]";
+  itemIdField.value = String(numericVariantId);
+  form.appendChild(itemIdField);
 
-  const result = await response.json();
-  
-  if (result.error) {
-    throw new Error(result.error);
-  }
+  const itemQtyField = document.createElement("input");
+  itemQtyField.type = "hidden";
+  itemQtyField.name = "items[][quantity]";
+  itemQtyField.value = String(quantity);
+  form.appendChild(itemQtyField);
 
-  console.log('[AddToCart] Success:', result);
-  
-  // Debug: Log cart details
-  if (result.cart) {
-    console.log('[AddToCart] Cart details:', {
-      itemCount: result.cart.item_count,
-      totalPrice: result.cart.total_price,
-      items: result.cart.items?.map(item => ({
-        id: item.variant_id,
-        title: item.product_title,
-        quantity: item.quantity
-      }))
-    });
-  }
-  
-  return result;
+  // Submit the form
+  document.body.appendChild(form);
+  form.submit();
+
+  // Clean up after a delay
+  setTimeout(() => {
+    try { 
+      document.body.removeChild(form); 
+    } catch (e) {
+      console.log('[AddToCart] Form cleanup completed');
+    }
+  }, 1000);
+
+  return Promise.resolve({ success: true, method: 'redirect' });
 }
 
 // All cart updates will be performed by Shopify when we POST a form to ecobambo.com
@@ -112,9 +106,9 @@ const AddToCart = ({ product, selectedVariant }) => {
     setLoading(true);
     try {
       const numericId = toNumericVariantId(selectedVariant.id);
-      await submitToShopifyProxy(numericId, quantity);
+      await submitToShopifyCart(numericId, quantity);
       setSidebarOpen(true);
-      console.log("Item successfully added to cart via proxy");
+      console.log("Item successfully added to cart via redirect");
     } catch (err) {
       console.error("Add to cart submit failed:", err);
       alert("Add to cart failed: " + (err.message || String(err)));
@@ -131,7 +125,7 @@ const AddToCart = ({ product, selectedVariant }) => {
     setLoading(true);
     try {
       const numericId = toNumericVariantId(selectedVariant.id);
-      await submitToShopifyProxy(numericId, quantity);
+      await submitToShopifyCart(numericId, quantity);
       // Open cart page in new tab for user clarity
       window.open(`https://${SHOPIFY_DOMAIN}/cart`, "_blank");
     } catch (err) {
@@ -178,7 +172,7 @@ const AddToCart = ({ product, selectedVariant }) => {
           <div className="relative w-[350px] bg-white shadow-xl p-6 z-50">
             <button className="absolute top-4 right-4 text-gray-600 hover:text-black" onClick={() => setSidebarOpen(false)}><FaTimes size={20} /></button>
             <h2 className="text-lg text-black font-semibold mb-4">{product?.title || "Your Cart"}</h2>
-            <p className="text-sm text-black">Item added to cart. <a href={`https://${SHOPIFY_DOMAIN}/cart`} target="_blank" rel="noreferrer" className="underline">Open store cart</a></p>
+            <p className="text-sm text-black">Item added to cart! <a href={`https://${SHOPIFY_DOMAIN}/cart`} target="_blank" rel="noreferrer" className="underline">View cart</a></p>
           </div>
         </div>
       )}
