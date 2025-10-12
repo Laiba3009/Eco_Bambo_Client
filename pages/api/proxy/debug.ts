@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     'https://ecobambo.com',
     'http://localhost:3000'
   ];
-  const corsOrigin = allowedOrigins.includes(origin) ? origin : 'https://eco-bambo.vercel.app';
+  const corsOrigin = (origin && allowedOrigins.includes(origin)) ? origin : 'https://eco-bambo.vercel.app';
   
   res.setHeader('Access-Control-Allow-Origin', corsOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');

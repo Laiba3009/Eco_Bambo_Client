@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ];
 
   // Set CORS headers - must be specific origin when using credentials
-  const corsOrigin = allowedOrigins.includes(origin) ? origin : 'https://eco-bambo.vercel.app';
+  const corsOrigin = (origin && allowedOrigins.includes(origin)) ? origin : 'https://eco-bambo.vercel.app';
   res.setHeader('Access-Control-Allow-Origin', corsOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
