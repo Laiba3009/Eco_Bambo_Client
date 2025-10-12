@@ -3,8 +3,17 @@ import crypto from 'crypto';
 
 // Shopify App Proxy handler with HMAC verification and cart session forwarding
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Set CORS headers for all requests
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Get the origin from the request
+  const origin = req.headers.origin || req.headers.referer;
+  const allowedOrigins = [
+    'https://eco-bambo.vercel.app',
+    'https://ecobambo.com',
+    'http://localhost:3000' // for development
+  ];
+
+  // Set CORS headers - must be specific origin when using credentials
+  const corsOrigin = allowedOrigins.includes(origin) ? origin : 'https://eco-bambo.vercel.app';
+  res.setHeader('Access-Control-Allow-Origin', corsOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -15,6 +24,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    // Log request details for debugging
+    console.log('[PROXY] Request details:', {
+      method: req.method,
+      url: req.url,
+      origin: origin,
+      corsOrigin: corsOrigin,
+      query: req.query,
+      headers: {
+        'user-agent': req.headers['user-agent'],
+        'content-type': req.headers['content-type']
+      }
+    });
+
     // Verify HMAC signature for security (only in production)
     const isProduction = process.env.NODE_ENV === 'production';
     if (isProduction) {
@@ -93,13 +115,13 @@ function verifyShopifyProxyRequest(req: NextApiRequest): boolean {
     Buffer.from(hmac, 'hex')
   );
 
-  if (!isValid) {
-    console.error('[PROXY] HMAC verification failed', {
-      expected: hmac,
-      received: signature,
-      params: sortedParams
-    });
-  }
+  console.log('[PROXY] HMAC verification details:', {
+    isValid,
+    expected: hmac,
+    received: signature,
+    params: sortedParams,
+    sharedSecretConfigured: !!sharedSecret
+  });
 
   return isValid;
 }

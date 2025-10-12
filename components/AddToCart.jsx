@@ -52,10 +52,8 @@ async function submitToShopifyProxy(numericVariantId, quantity = 1) {
     body: formData.toString(),
   };
 
-  // Only add credentials for production (App Proxy)
-  if (!isDevelopment) {
-    fetchOptions.credentials = 'include';
-  }
+  // Note: Removed credentials for now to avoid CORS issues
+  // The Shopify App Proxy should handle session management
 
   const response = await fetch(proxyUrl, fetchOptions);
 
