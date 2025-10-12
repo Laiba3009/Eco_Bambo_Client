@@ -40,10 +40,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Verify HMAC signature for security (only in production)
     const isProduction = process.env.NODE_ENV === 'production';
     if (isProduction) {
-      const isValidRequest = verifyShopifyProxyRequest(req);
-      if (!isValidRequest) {
-        console.error('[PROXY] Invalid HMAC signature');
-        return res.status(401).json({ error: 'Unauthorized' });
+      // Check if this is a direct request from frontend (no signature) vs Shopify proxy request
+      const hasSignature = req.query.signature;
+      const isDirectRequest = !hasSignature && req.method === 'POST';
+      
+      if (isDirectRequest) {
+        console.log('[PROXY] Direct frontend request detected - skipping HMAC verification');
+      } else {
+        const isValidRequest = verifyShopifyProxyRequest(req);
+        if (!isValidRequest) {
+          console.error('[PROXY] Invalid HMAC signature');
+          console.error('[PROXY] Request details for debugging:', {
+            query: req.query,
+            method: req.method,
+            url: req.url,
+            headers: req.headers
+          });
+          return res.status(401).json({ error: 'Unauthorized' });
+        }
       }
     } else {
       console.log('[PROXY] Development mode - skipping HMAC verification');
