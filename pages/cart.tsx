@@ -55,13 +55,20 @@ export default function CartPage() {
     }
   };
 
-  const handleCheckout = () => {
-    const checkoutUrl = getCheckoutUrl();
-    if (checkoutUrl) {
-      window.open(checkoutUrl, '_blank');
-    } else {
-      // Fallback to Shopify cart page
-      window.open(`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/cart`, '_blank');
+  const handleCheckout = async () => {
+    try {
+      // Use direct cart sync to redirect to Shopify with all cart items
+      const { directCartSync } = await import('../lib/directCartSync');
+      await directCartSync.syncToShopifyAndRedirect('checkout');
+    } catch (error) {
+      console.error('Failed to sync cart to Shopify:', error);
+      // Fallback to regular checkout
+      const checkoutUrl = getCheckoutUrl();
+      if (checkoutUrl) {
+        window.open(checkoutUrl, '_blank');
+      } else {
+        window.open(`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/cart`, '_blank');
+      }
     }
   };
 
@@ -191,6 +198,21 @@ export default function CartPage() {
             className="w-full bg-black text-white py-3 px-6 rounded-lg hover:bg-gray-800 disabled:opacity-50 font-semibold"
           >
             {loading ? 'Processing...' : 'Proceed to Checkout'}
+          </button>
+          
+          <button
+            onClick={async () => {
+              try {
+                const { directCartSync } = await import('../lib/directCartSync');
+                await directCartSync.syncToShopifyAndRedirect('cart');
+              } catch (error) {
+                console.error('Failed to sync cart:', error);
+                window.open(`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/cart`, '_blank');
+              }
+            }}
+            className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 font-semibold"
+          >
+            View Cart on Shopify
           </button>
           
           <button

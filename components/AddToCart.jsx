@@ -173,26 +173,12 @@ const AddToCart = ({ product, selectedVariant }) => {
       const numericId = toNumericVariantId(selectedVariant.id);
       await cartManager.addToCart(numericId, quantity);
       
-      // Get checkout URL from cart manager
-      const checkoutUrl = cartManager.getCheckoutUrl();
-      
-      cartLogger.debug('AddToCart', 'Retrieved checkout URL', {
-        hasCheckoutUrl: !!checkoutUrl,
-        checkoutUrlPreview: checkoutUrl?.substring(0, 50) + '...'
-      });
-      
-      if (checkoutUrl) {
-        cartLogger.info('AddToCart', 'Redirecting to Shopify checkout', {
-          checkoutUrl: checkoutUrl
-        });
-        window.open(checkoutUrl, '_blank');
-      } else {
-        cartLogger.warn('AddToCart', 'No checkout URL available, using fallback cart page');
-        window.open(`https://${SHOPIFY_DOMAIN}/cart`, '_blank');
-      }
+      // Use direct cart sync to redirect to Shopify with cart items
+      const { directCartSync } = await import('../lib/directCartSync');
+      await directCartSync.syncToShopifyAndRedirect('checkout');
 
       cartLogger.operationSuccess('AddToCart', 'handleOrderNow', {
-        redirectMethod: checkoutUrl ? 'checkout' : 'cart_fallback'
+        redirectMethod: 'direct_sync_checkout'
       });
 
     } catch (err) {
@@ -298,13 +284,19 @@ const AddToCart = ({ product, selectedVariant }) => {
 
             <div className="space-y-3">
               <button
-                onClick={() => {
+                onClick={async () => {
                   setSidebarOpen(false);
-                  window.open(`https://${SHOPIFY_DOMAIN}/cart`, '_blank');
+                  try {
+                    const { directCartSync } = await import('../lib/directCartSync');
+                    await directCartSync.syncToShopifyAndRedirect('cart');
+                  } catch (error) {
+                    console.error('Failed to sync cart:', error);
+                    window.open(`https://${SHOPIFY_DOMAIN}/cart`, '_blank');
+                  }
                 }}
                 className="w-full bg-black text-[rgb(184,134,11,1)] py-2 px-4 rounded hover:bg-gray-800 transition-colors"
               >
-                View Cart
+                View Cart on Shopify
               </button>
               
               <button
