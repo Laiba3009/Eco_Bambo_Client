@@ -92,7 +92,10 @@ export default async function handler(req, res) {
 
     console.log('[Proxy] Forwarding to Shopify:', { url: shopifyUrl, method: fetchOptions.method });
 
-    // Forward request to Shopify
+    // Forward request to Shopify with proper headers
+    fetchOptions.headers['X-Forwarded-For'] = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    fetchOptions.headers['User-Agent'] = req.headers['user-agent'] || 'Shopify-App-Proxy/1.0';
+    
     const response = await fetch(shopifyUrl, fetchOptions);
     
     let data;
@@ -107,6 +110,11 @@ export default async function handler(req, res) {
       } catch {
         data = { message: text, raw: true };
       }
+    }
+
+    // Forward relevant headers
+    if (response.headers.get('set-cookie')) {
+      res.setHeader('Set-Cookie', response.headers.get('set-cookie'));
     }
 
     console.log('[Proxy] Shopify response:', { 

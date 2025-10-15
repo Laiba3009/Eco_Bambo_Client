@@ -1,6 +1,10 @@
 // pages/api/proxy/index.js
 // Main Shopify App Proxy handler - this is what Shopify will call
 
+import crypto from 'crypto';
+
+const SHOPIFY_APP_SHARED_SECRET = process.env.SHOPIFY_APP_SHARED_SECRET;
+
 export default async function handler(req, res) {
   const { method, query, body } = req;
   
@@ -16,14 +20,24 @@ export default async function handler(req, res) {
     hasSignature: !!signature 
   });
 
-  // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Set CORS headers for cross-origin requests
+  res.setHeader('Access-Control-Allow-Origin', 'https://eco-bambo.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   if (method === 'OPTIONS') {
     res.status(200).end();
     return;
+  }
+
+  // Verify Shopify signature for security
+  if (signature && SHOPIFY_APP_SHARED_SECRET) {
+    const isValid = verifyShopifySignature(query, SHOPIFY_APP_SHARED_SECRET);
+    if (!isValid) {
+      console.warn('[App Proxy] Invalid signature');
+      return res.status(401).json({ error: 'Invalid signature' });
+    }
   }
 
   // Route to appropriate handler based on path
@@ -107,5 +121,28 @@ async function handleCartSync(req, res) {
       error: 'Sync failed', 
       message: error.message 
     });
+  }
+}
+// V
+erify Shopify App Proxy signature
+function verifyShopifySignature(query, secret) {
+  try {
+    const { signature, ...params } = query;
+    
+    // Sort parameters and create query string
+    const sortedParams = Object.keys(params)
+      .sort()
+      .map(key => `${key}=${params[key]}`)
+      .join('&');
+    
+    // Create HMAC
+    const hmac = crypto.createHmac('sha256', secret);
+    hmac.update(sortedParams);
+    const calculatedSignature = hmac.digest('hex');
+    
+    return calculatedSignature === signature;
+  } catch (error) {
+    console.error('[App Proxy] Signature verification error:', error);
+    return false;
   }
 }
