@@ -87,7 +87,7 @@ const AddToCart = ({ product, selectedVariant }) => {
     });
 
     // Redirect to Shopify to add item
-    window.open(shopifyAddUrl, '_blank');
+    // window.open(shopifyAddUrl, '_blank'); // TODO: Fix URL encoding issue
   };
 
   const handleOrderNow = async () => {
@@ -107,7 +107,7 @@ const AddToCart = ({ product, selectedVariant }) => {
     });
 
     // Redirect to Shopify to add item and go to checkout
-    window.open(shopifyAddUrl, '_blank');
+    // window.open(shopifyAddUrl, '_blank'); // TODO: Fix checkout redirect
   };
 
   return (
