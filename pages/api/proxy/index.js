@@ -123,8 +123,8 @@ async function handleCartSync(req, res) {
     });
   }
 }
-// V
-erify Shopify App Proxy signature
+
+// Verify Shopify App Proxy signature
 function verifyShopifySignature(query, secret) {
   try {
     const { signature, ...params } = query;
