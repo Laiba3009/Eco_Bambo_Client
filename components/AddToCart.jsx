@@ -45,11 +45,11 @@ const AddToCart = ({ product, selectedVariant }) => {
           productTitle: product?.title,
           selectedVariant: selectedVariant?.id
         });
-        
+
         await cartManager.initialize();
         const summary = cartManager.getCartSummary();
         setCartSummary(summary);
-        
+
         cartLogger.info('AddToCart', 'Cart manager initialized successfully', {
           cartTotal: summary.totalQuantity,
           totalAmount: summary.totalAmount
@@ -64,133 +64,50 @@ const AddToCart = ({ product, selectedVariant }) => {
     initializeCart();
   }, []);
 
-  const handleDecrease = () => { 
-    if (quantity > 1) setQuantity(q => q - 1); 
+  const handleDecrease = () => {
+    if (quantity > 1) setQuantity(q => q - 1);
   };
-  
+
   const handleIncrease = () => setQuantity(q => q + 1);
 
   const handleAddToCart = async () => {
-    cartLogger.operationStart('AddToCart', 'handleAddToCart', {
-      productTitle: product?.title,
-      variantId: selectedVariant?.id,
-      quantity: quantity
-    });
-
     if (!selectedVariant || !selectedVariant.id) {
-      const errorMsg = "Please select a variant first.";
-      cartLogger.warn('AddToCart', 'Add to cart attempted without variant selection', null, {
-        productTitle: product?.title,
-        hasSelectedVariant: !!selectedVariant
-      });
-      setError(errorMsg);
+      setError("Please select a variant first.");
       return;
     }
 
-    setLoading(true);
-    setError(null);
-    setSuccess(false);
+    // Simple solution: Direct redirect to Shopify cart/add URL
+    const numericId = toNumericVariantId(selectedVariant.id);
+    const shopifyAddUrl = `https://ecobambo.com/cart/add?id=${numericId}&quantity=${quantity}&return_to=/cart`;
 
-    try {
-      cartLogger.info('AddToCart', 'Starting add to cart process', {
-        variantId: selectedVariant.id,
-        quantity: quantity,
-        productTitle: product?.title
-      });
+    console.log('[AddToCart] Redirecting to Shopify cart/add:', {
+      variantId: numericId,
+      quantity: quantity,
+      url: shopifyAddUrl
+    });
 
-      // Use CartManager instead of form submission
-      const numericId = toNumericVariantId(selectedVariant.id);
-      
-      cartLogger.debug('AddToCart', 'Converted variant ID', {
-        originalId: selectedVariant.id,
-        numericId: numericId
-      });
-
-      const updatedCart = await cartManager.addToCart(numericId, quantity);
-      
-      // Update local cart summary
-      const summary = cartManager.getCartSummary();
-      setCartSummary(summary);
-      
-      cartLogger.info('AddToCart', 'Cart summary updated', {
-        previousTotal: cartSummary.totalQuantity,
-        newTotal: summary.totalQuantity,
-        itemsAdded: quantity
-      });
-      
-      // Update cart context if available
-      if (cartContext && cartContext.addToCart) {
-        cartLogger.debug('AddToCart', 'Updating cart context');
-        cartContext.addToCart(numericId, quantity);
-      } else {
-        cartLogger.warn('AddToCart', 'Cart context not available for update');
-      }
-
-      setSuccess(true);
-      setSidebarOpen(true);
-      
-      cartLogger.operationSuccess('AddToCart', 'handleAddToCart', {
-        cartTotal: summary.totalQuantity,
-        itemsInCart: summary.items.length,
-        totalAmount: summary.totalAmount,
-        currencyCode: summary.currencyCode
-      });
-
-    } catch (err) {
-      const errorMessage = err.message || 'Failed to add item to cart. Please try again.';
-      cartLogger.operationFailure('AddToCart', 'handleAddToCart', err, {
-        variantId: selectedVariant.id,
-        quantity: quantity,
-        productTitle: product?.title
-      });
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
-    }
+    // Redirect to Shopify to add item
+    window.open(shopifyAddUrl, '_blank');
   };
 
   const handleOrderNow = async () => {
-    cartLogger.operationStart('AddToCart', 'handleOrderNow', {
-      productTitle: product?.title,
-      variantId: selectedVariant?.id,
-      quantity: quantity
-    });
-
     if (!selectedVariant || !selectedVariant.id) {
-      const errorMsg = "Please select a variant first.";
-      cartLogger.warn('AddToCart', 'Order now attempted without variant selection');
-      setError(errorMsg);
+      setError("Please select a variant first.");
       return;
     }
 
-    setLoading(true);
-    setError(null);
+    // Simple solution: Direct redirect to Shopify cart/add URL then checkout
+    const numericId = toNumericVariantId(selectedVariant.id);
+    const shopifyAddUrl = `https://ecobambo.com/cart/add?id=${numericId}&quantity=${quantity}&return_to=/checkout`;
 
-    try {
-      cartLogger.info('AddToCart', 'Starting order now process');
-      
-      // First add to cart
-      const numericId = toNumericVariantId(selectedVariant.id);
-      await cartManager.addToCart(numericId, quantity);
-      
-      // Use direct URL sync to redirect to Shopify with cart items
-      const { directUrlSync } = await import('../lib/directUrlSync');
-      await directUrlSync.syncAndRedirect('checkout');
+    console.log('[AddToCart] Redirecting to Shopify checkout:', {
+      variantId: numericId,
+      quantity: quantity,
+      url: shopifyAddUrl
+    });
 
-      cartLogger.operationSuccess('AddToCart', 'handleOrderNow', {
-        redirectMethod: 'direct_sync_checkout'
-      });
-
-    } catch (err) {
-      const errorMessage = err.message || 'Failed to process order. Please try again.';
-      cartLogger.operationFailure('AddToCart', 'handleOrderNow', err, {
-        variantId: selectedVariant.id,
-        quantity: quantity
-      });
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
-    }
+    // Redirect to Shopify to add item and go to checkout
+    window.open(shopifyAddUrl, '_blank');
   };
 
   return (
@@ -222,18 +139,18 @@ const AddToCart = ({ product, selectedVariant }) => {
 
         {/* Buttons */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-          <button 
-            onClick={handleAddToCart} 
-            disabled={loading || !selectedVariant?.id} 
+          <button
+            onClick={handleAddToCart}
+            disabled={loading || !selectedVariant?.id}
             className="bg-black text-[rgb(184,134,11,1)] py-3 px-4 rounded flex items-center justify-center gap-2 w-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-800 transition-colors"
           >
             <FaShoppingCart />
             {loading ? "Adding..." : "Add to Cart"}
           </button>
 
-          <button 
-            onClick={handleOrderNow} 
-            disabled={loading || !selectedVariant?.id} 
+          <button
+            onClick={handleOrderNow}
+            disabled={loading || !selectedVariant?.id}
             className="border border-[rgb(184,134,11,1)] bg-black text-[rgb(184,134,11,1)] py-4 px-6 rounded flex items-center justify-center gap-2 w-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-800 transition-colors"
           >
             <FaShoppingBag />
@@ -256,17 +173,17 @@ const AddToCart = ({ product, selectedVariant }) => {
         <div className="fixed inset-0 z-50 flex">
           <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
           <div className="relative w-[350px] bg-white shadow-xl p-6 z-50">
-            <button 
-              className="absolute top-4 right-4 text-gray-600 hover:text-black" 
+            <button
+              className="absolute top-4 right-4 text-gray-600 hover:text-black"
               onClick={() => setSidebarOpen(false)}
             >
               <FaTimes size={20} />
             </button>
-            
+
             <h2 className="text-lg text-black font-semibold mb-4">
               ✅ Added to Cart!
             </h2>
-            
+
             <div className="mb-4">
               <p className="text-sm text-gray-600 mb-2">Product:</p>
               <p className="font-medium text-black">{product?.title || "Product"}</p>
@@ -284,21 +201,15 @@ const AddToCart = ({ product, selectedVariant }) => {
 
             <div className="space-y-3">
               <button
-                onClick={async () => {
+                onClick={() => {
                   setSidebarOpen(false);
-                  try {
-                    const { directUrlSync } = await import('../lib/directUrlSync');
-                    await directUrlSync.syncAndRedirect('cart');
-                  } catch (error) {
-                    console.error('Failed to sync cart:', error);
-                    window.open(`https://${SHOPIFY_DOMAIN}/cart`, '_blank');
-                  }
+                  window.open(`https://${SHOPIFY_DOMAIN}/cart`, '_blank');
                 }}
                 className="w-full bg-black text-[rgb(184,134,11,1)] py-2 px-4 rounded hover:bg-gray-800 transition-colors"
               >
                 View Cart on Shopify
               </button>
-              
+
               <button
                 onClick={() => setSidebarOpen(false)}
                 className="w-full border border-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-50 transition-colors"
