@@ -1,27 +1,24 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 
-type CartItem = {
-  variantId: string;
-  quantity: number;
-};
-
 const CheckoutButton = () => {
-  const { cart } = useCart() as { cart: CartItem[] };
+  const cartContext = useCart();
 
   const handleCheckout = () => {
-    if (!cart || cart.length === 0) {
+    if (!cartContext || !cartContext.cart || cartContext.cart.length === 0) {
       alert("Your cart is empty!");
       return;
     }
 
-    // Build cart URL
-    const cartString = cart
-      .map((item) => `${item.variantId}:${item.quantity}`)
-      .join(",");
-
-    const checkoutUrl = `https://ecobambo.com/cart/${cartString}`;
-    window.location.href = checkoutUrl;
+    // Use the checkout URL from cart manager if available
+    const checkoutUrl = cartContext.getCheckoutUrl();
+    
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl;
+    } else {
+      // Fallback to cart page
+      window.location.href = "https://ecobambo.com/cart";
+    }
   };
 
   return (
