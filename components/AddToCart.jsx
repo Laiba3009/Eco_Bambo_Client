@@ -173,9 +173,9 @@ const AddToCart = ({ product, selectedVariant }) => {
       const numericId = toNumericVariantId(selectedVariant.id);
       await cartManager.addToCart(numericId, quantity);
       
-      // Use direct cart sync to redirect to Shopify with cart items
-      const { directCartSync } = await import('../lib/directCartSync');
-      await directCartSync.syncToShopifyAndRedirect('checkout');
+      // Use direct URL sync to redirect to Shopify with cart items
+      const { directUrlSync } = await import('../lib/directUrlSync');
+      await directUrlSync.syncAndRedirect('checkout');
 
       cartLogger.operationSuccess('AddToCart', 'handleOrderNow', {
         redirectMethod: 'direct_sync_checkout'
@@ -287,8 +287,8 @@ const AddToCart = ({ product, selectedVariant }) => {
                 onClick={async () => {
                   setSidebarOpen(false);
                   try {
-                    const { directCartSync } = await import('../lib/directCartSync');
-                    await directCartSync.syncToShopifyAndRedirect('cart');
+                    const { directUrlSync } = await import('../lib/directUrlSync');
+                    await directUrlSync.syncAndRedirect('cart');
                   } catch (error) {
                     console.error('Failed to sync cart:', error);
                     window.open(`https://${SHOPIFY_DOMAIN}/cart`, '_blank');

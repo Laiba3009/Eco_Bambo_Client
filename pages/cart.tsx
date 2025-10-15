@@ -57,9 +57,9 @@ export default function CartPage() {
 
   const handleCheckout = async () => {
     try {
-      // Use direct cart sync to redirect to Shopify with all cart items
-      const { directCartSync } = await import('../lib/directCartSync');
-      await directCartSync.syncToShopifyAndRedirect('checkout');
+      // Use direct URL sync to redirect to Shopify with all cart items
+      const { directUrlSync } = await import('../lib/directUrlSync');
+      await directUrlSync.syncAndRedirect('checkout');
     } catch (error) {
       console.error('Failed to sync cart to Shopify:', error);
       // Fallback to regular checkout
@@ -203,8 +203,8 @@ export default function CartPage() {
           <button
             onClick={async () => {
               try {
-                const { directCartSync } = await import('../lib/directCartSync');
-                await directCartSync.syncToShopifyAndRedirect('cart');
+                const { directUrlSync } = await import('../lib/directUrlSync');
+                await directUrlSync.syncAndRedirect('cart');
               } catch (error) {
                 console.error('Failed to sync cart:', error);
                 window.open(`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/cart`, '_blank');
