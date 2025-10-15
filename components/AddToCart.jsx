@@ -121,7 +121,7 @@ const AddToCart = ({ product, selectedVariant }) => {
       // Update cart context if available
       if (cartContext && cartContext.addToCart) {
         cartLogger.debug('AddToCart', 'Updating cart context');
-        cartContext.addToCart(product, selectedVariant.id, quantity);
+        cartContext.addToCart(numericId, quantity);
       } else {
         cartLogger.warn('AddToCart', 'Cart context not available for update');
       }
