@@ -83,21 +83,15 @@ const AddToCart = ({ product, selectedVariant }) => {
     const numericId = toNumericVariantId(selectedVariant.id);
     const shopifyAddUrl = `https://ecobambo.com/cart/add?id=${numericId}&quantity=${quantity}&return_to=/cart`;
 
-    // Simulate processing delay
-    setTimeout(() => {
-      console.log('[AddToCart] Attempting cart sync...', {
-        variantId: numericId,
-        quantity: quantity,
-        status: 'URL_ENCODING_ERROR'
-      });
+    console.log('[AddToCart] Redirecting to Shopify cart/add:', {
+      variantId: numericId,
+      quantity: quantity,
+      url: shopifyAddUrl
+    });
 
-      // Show error message to user
-      setError("Cart sync failed: URL encoding issue. Working on a fix...");
-      setLoading(false);
-
-      // Redirect to Shopify to add item
-      // window.open(shopifyAddUrl, '_blank'); // TODO: Fix URL encoding issue
-    }, 1500);
+    // Redirect to Shopify to add item
+    window.open(shopifyAddUrl, '_blank');
+    setLoading(false);
   };
 
   const handleOrderNow = async () => {
@@ -113,21 +107,15 @@ const AddToCart = ({ product, selectedVariant }) => {
     const numericId = toNumericVariantId(selectedVariant.id);
     const shopifyAddUrl = `https://ecobambo.com/cart/add?id=${numericId}&quantity=${quantity}&return_to=/checkout`;
 
-    // Simulate processing delay
-    setTimeout(() => {
-      console.log('[AddToCart] Attempting checkout redirect...', {
-        variantId: numericId,
-        quantity: quantity,
-        status: 'CHECKOUT_REDIRECT_ERROR'
-      });
+    console.log('[AddToCart] Redirecting to Shopify checkout:', {
+      variantId: numericId,
+      quantity: quantity,
+      url: shopifyAddUrl
+    });
 
-      // Show error message to user
-      setError("Checkout redirect failed: API integration issue. Almost fixed...");
-      setLoading(false);
-
-      // Redirect to Shopify to add item and go to checkout
-      // window.open(shopifyAddUrl, '_blank'); // TODO: Fix checkout redirect
-    }, 2000);
+    // Redirect to Shopify to add item and go to checkout
+    window.open(shopifyAddUrl, '_blank');
+    setLoading(false);
   };
 
   return (
