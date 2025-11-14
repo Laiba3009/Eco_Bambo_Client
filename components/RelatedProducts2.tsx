@@ -62,7 +62,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
         
         {/* Price */}
-        <p className="text-lg font-bold text-green-600 mb-3">{product.price}</p>
+        <p className="text-lg font-bold text-[#b8860b] "mb-3">{product.price}</p>
         
         {/* Product Type Badge */}
         {product.productType && (
