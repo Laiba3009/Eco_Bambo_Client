@@ -138,13 +138,17 @@ function Reviews(): JSX.Element {
     <section className="py-12 mb-20 mt-20 bg-white relative">
       {/* Title */}
       <motion.h2
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: [1, 1.1, 1] }}
-        transition={{ duration: 1.5, ease: [0.42, 0, 0.58, 1], repeat: Infinity }}
-        className="text-xl sm:text-2xl md:text-4xl font-semibold text-center mb-8 text-black"
-      >
-        Customer Reviews
-      </motion.h2>
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  animate={{ y: [0, -10, 0] }}
+  transition={{
+    opacity: { duration: 1, ease: "easeOut" },
+    y: { duration: 4, ease: "easeInOut", repeat: Infinity },
+  }}
+  className="text-2xl sm:text-3xl md:text-5xl font-bold text-center mb-12 text-gray-900 tracking-tight"
+>
+  Customer Reviews
+</motion.h2>
 
       <div {...handlers} className="flex items-center justify-center gap-4 w-full px-0">
         {/* Prev Button */}
