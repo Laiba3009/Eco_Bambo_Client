@@ -235,7 +235,7 @@ const RelatedProducts3: React.FC = () => {
                 {product.description}
               </p>
               <div className="flex justify-between items-center">
-                <span className="text-base font-bold text-yellow-500">
+                <span className="text-base font-bold text-[#b8860b]"">
                   {product.price}
                 </span>
                 <a
