@@ -41,7 +41,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         </a>
 
         {/* Price */}
-        <p className="text-lg font-bold text-green-600 mb-2">{product.price}</p>
+        <p className="text-lg font-bold text-[#b8860b] mb-2">{product.price}</p>
 
         {/* Product type */}
         {product.productType && (
