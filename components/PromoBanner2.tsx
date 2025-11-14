@@ -92,13 +92,20 @@ const App = () => {
     <section className="px-0 py-0 bg-white mb-5 min-h-screen flex items-center justify-center font-sans">
       <div className="max-w-[1300px] mx-auto w-full">
         {/* Heading */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6 text-black">
-          <CustomTypewriter
-            strings={["Fresh Decor & Greenery for Your Home!"]}
-            delay={70}
-            loop={true}
-          />
-        </h2>
+        <h2
+  className="
+    text-2xl sm:text-3xl md:text-5xl
+    font-bold text-center mb-6 text-black
+    min-h-[70px] sm:min-h-[90px] md:min-h-[120px]
+    flex items-center justify-center
+  "
+>
+  <CustomTypewriter
+    strings={["Fresh Decor & Greenery for Your Home!"]}
+    delay={70}
+    loop={true}
+  />
+</h2>
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1 gap-2">
