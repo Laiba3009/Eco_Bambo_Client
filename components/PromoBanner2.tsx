@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
+import Typewriter from "typewriter-effect";
 // Custom Typewriter component
-type CustomTypewriterProps = {
-  strings: string[];
-  delay?: number;
-  loop?: boolean;
-};
+
 
 const CustomTypewriter: React.FC<CustomTypewriterProps> = ({
   strings,
