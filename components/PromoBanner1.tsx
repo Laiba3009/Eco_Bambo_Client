@@ -60,10 +60,13 @@ const App = () => {
     flex items-center justify-center
   "
 >
-  <CustomTypewriter
-    strings={["Coastal Farmhouse Decor House Plants for Sale!"]}
-    delay={70}
-    loop={true}
+  <Typewriter
+    options={{
+      strings: ["Coastal Farmhouse Decor House Plants for Sale!"],
+      autoStart: true,
+      loop: true,
+      delay: 50,
+    }}
   />
 </h2>
       {/* Image Grid */}
