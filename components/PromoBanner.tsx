@@ -20,17 +20,21 @@ const PromoBanner = () => {
   return (
     <section className="py-8 px-4 bg-white">
       {/* Title */}
-      <h2 className="text-xl sm:text-2xl md:text-4xl font-semibold text-center mb-8 text-black">
-        <Typewriter
-          options={{
-            strings: ["Coastal Farmhouse Decor House Plants for Sale!"],
-            autoStart: true,
-            loop: true,
-            delay: 10,
-          }}
-        />
-      </h2>
-
+      
+<h2
+  className="
+    text-2xl sm:text-3xl md:text-5xl
+    font-bold text-center mb-6 text-black
+    min-h-[70px] sm:min-h-[90px] md:min-h-[120px]
+    flex items-center justify-center
+  "
+>
+  <CustomTypewriter
+    strings={["Coastal Farmhouse Decor House Plants for Sale!"]}
+    delay={70}
+    loop={true}
+  />
+</h2>
       {/* Grid */}
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-5 gap-2 sm:gap-2">
         
