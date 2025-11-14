@@ -92,6 +92,7 @@ const App = () => {
     <section className="px-0 py-0 bg-white mb-5 min-h-screen flex items-center justify-center font-sans">
       <div className="max-w-[1300px] mx-auto w-full">
         {/* Heading */}
+        
         <h2
   className="
     text-2xl sm:text-3xl md:text-5xl
@@ -100,10 +101,13 @@ const App = () => {
     flex items-center justify-center
   "
 >
-  <CustomTypewriter
-    strings={["Fresh Decor & Greenery for Your Home!"]}
-    delay={70}
-    loop={true}
+  <Typewriter
+    options={{
+      strings: ["Fresh Decor & Greenery for Your Home!"],
+      autoStart: true,
+      loop: true,
+      delay: 50,
+    }}
   />
 </h2>
 
