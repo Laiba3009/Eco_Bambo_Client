@@ -59,7 +59,7 @@ const reviews: Review[] = [
   {
     id: 6,
     name: "David Miller",
-    images: ["/images/Sf4.JPG", "/images/Sf5.Jpg"],
+    images: ["/images/Sf4.JPG", "/images/Sf5.JPG"],
     avatar: "/images/user.png",
     text: "The Flower Pot from EcoBamboo is simple yet very stylish. It adds a modern and eco-friendly touch to my space.",
     rating: 4,
