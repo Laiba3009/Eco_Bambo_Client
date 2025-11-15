@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import CartDebugPanel from "../components/CartDebugPanel";
 import CartErrorBoundary from "../components/CartErrorBoundary";
 import { useEffect } from "react";
+import WhatsAppWidget from "../components/WhatsAppWidget";
 import cartLogger from "../lib/cartLogger";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -49,6 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
           <Footer />
           {/* Debug panel for development */}
+          <WhatsAppWidget/>
           <CartDebugPanel />
         </div>
       </CartProvider>
