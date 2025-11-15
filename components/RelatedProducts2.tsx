@@ -245,7 +245,7 @@ const RelatedProducts2 = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 font-inter">
+      <div className="h-[80vh] bg-white flex flex-col items-center justify-center p-4 font-inter">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800 mx-auto mb-4"></div>
           <p className="text-lg text-gray-700">Loading products from Shopify...</p>
@@ -256,14 +256,14 @@ const RelatedProducts2 = () => {
 
   if (error || products.length === 0) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 font-inter">
+      <div className="h-[80vh] bg-white flex flex-col items-center justify-center p-4 font-inter">
         <div className="text-center">
           <p className="text-lg text-red-600 mb-4">
             {error || "No products available"}
           </p>
           <button 
             onClick={() => window.location.reload()} 
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors"
           >
             Retry
           </button>
@@ -273,7 +273,7 @@ const RelatedProducts2 = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 font-inter">
+    <div className="h-[80vh] bg-white flex flex-col items-center justify-center p-4 font-inter">
       <motion.h2
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
