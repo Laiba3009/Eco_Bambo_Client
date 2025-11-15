@@ -135,7 +135,7 @@ function Reviews(): JSX.Element {
   });
 
   return (
-    <section className="py-12 mb-20 mt-20 bg-white relative">
+    <section className="py-12 mb-15 mt-10 bg-white relative">
       {/* Title */}
       <motion.h2
   initial={{ opacity: 0, y: 30 }}
@@ -145,7 +145,7 @@ function Reviews(): JSX.Element {
     opacity: { duration: 1, ease: "easeOut" },
     y: { duration: 4, ease: "easeInOut", repeat: Infinity },
   }}
-  className="text-2xl sm:text-3xl md:text-5xl font-bold text-center mb-12 text-gray-900 tracking-tight"
+  className="text-2xl sm:text-3xl md:text-5xl font-bold text-center mb-5 text-gray-900 tracking-tight"
 >
   Customer Reviews
 </motion.h2>
