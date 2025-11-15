@@ -158,7 +158,7 @@ const RelatedProducts3: React.FC = () => {
   // ✅ Loading State
   if (loading) {
     return (
-      <section className="min-h-[50vh] flex flex-col items-center justify-center py-12 px-4">
+      <section className="min-h-[40vh] flex flex-col items-center justify-center py-12 px-4">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
           <p className="text-lg text-gray-700">Loading products...</p>
@@ -170,7 +170,7 @@ const RelatedProducts3: React.FC = () => {
   // ✅ Error State
   if (error || products.length === 0) {
     return (
-      <section className="min-h-[50vh] flex flex-col items-center justify-center py-12 px-4">
+      <section className="min-h-[40vh] flex flex-col items-center justify-center py-12 px-4">
         <div className="text-center">
           <p className="text-lg text-red-600 mb-4">
             {error || "No products available"}
