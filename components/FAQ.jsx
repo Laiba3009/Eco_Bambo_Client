@@ -43,7 +43,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="w-full px-0 py-8 sm:py-12 md:py-16 bg-white">
+    <section className="w-full px-0 pt-0 pb-0 bg-white">
       {/* Title */}
       <motion.h2
         className="text-[30px] sm:text-[22px] md:text-[26px] lg:text-[30px] font-bold text-[#000000] font-dm mb-10 leading-snug text-center"
