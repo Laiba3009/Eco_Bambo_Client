@@ -7,8 +7,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const RelatedProducts = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
-    loop: false,   // 👈 LOOP OFF — slider last par ruk jayega
-    dragFree: false
+    loop: false,
+    dragFree: false,
   });
 
   const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
@@ -18,58 +18,21 @@ const RelatedProducts = () => {
   useEffect(() => setShowTitle(true), []);
 
   const products = [
-    {
-      id: "1",
-      name:
-        "Premium Bamboo Gazebo for Garden and Outdoor Stylish Bamboo Pavilion & Pergola",
-      image: "/images/sil1.jpg",
-      link: "https://ecobambo.com/products/bamboo-gazebo-with-open-air-design",
-    },
-    {
-      id: "2",
-      name: "Modern Living Room Ke Liye Elegant Bamboo Sofa Set",
-      image: "/images/sil2.jpg",
-      link: "https://ecobambo.com/products/modern-living-room-ke-liye-elegant-bamboo-sofa-set",
-    },
-    {
-      id: "3",
-      name: "Premium Bamboo Single Bed for Kids with Canopy Design",
-      image: "/images/sil3.jpg",
-      link: "https://ecobambo.com/products/bamboo-single-beds-for-kids",
-    },
-    {
-      id: "4",
-      name: "Modern Bamboo Baby Chair – Eco-Friendly Seating",
-      image: "/images/sil4.jpg",
-      link: "https://ecobambo.com/products/modern-bamboo-baby-chair-master-everyday-chair-visitor",
-    },
-    {
-      id: "5",
-      name: "Handmade Bamboo Fence for Outdoor & Garden – Perfect Touch",
-      image: "/images/sil5.jpg",
-      link: "https://ecobambo.com/products/handmade-bamboo-fence",
-    },
-    {
-      id: "6",
-      name: "Covered Bamboo Swing – Relax in Style with Shade",
-      image: "/images/sil6.jpg",
-      link: "https://ecobambo.com/products/outdoor-bamboo-swings-for-toddlers",
-    },
-    {
-      id: "7",
-      name: "Garden Ke Liye Bamboo Chair – Nature Ka Touch!",
-      image: "/images/sil7.jpg",
-      link: "https://ecobambo.com/products/garden-ke-liye-bamboo-chair-nature-ka-touch",
-    },
+    { id: "1", name: "Premium Bamboo Gazebo for Garden and Outdoor Stylish Bamboo Pavilion & Pergola", image: "/images/sil1.jpg", link: "https://ecobambo.com/products/bamboo-gazebo-with-open-air-design" },
+    { id: "2", name: "Modern Living Room Ke Liye Elegant Bamboo Sofa Set", image: "/images/sil2.jpg", link: "https://ecobambo.com/products/modern-living-room-ke-liye-elegant-bamboo-sofa-set" },
+    { id: "3", name: "Premium Bamboo Single Bed for Kids with Canopy Design", image: "/images/sil3.jpg", link: "https://ecobambo.com/products/bamboo-single-beds-for-kids" },
+    { id: "4", name: "Modern Bamboo Baby Chair – Eco-Friendly Seating", image: "/images/sil4.jpg", link: "https://ecobambo.com/products/modern-bamboo-baby-chair-master-everyday-chair-visitor" },
+    { id: "5", name: "Handmade Bamboo Fence for Outdoor & Garden – Perfect Touch", image: "/images/sil5.jpg", link: "https://ecobambo.com/products/handmade-bamboo-fence" },
+    { id: "6", name: "Covered Bamboo Swing – Relax in Style with Shade", image: "/images/sil6.jpg", link: "https://ecobambo.com/products/outdoor-bamboo-swings-for-toddlers" },
+    { id: "7", name: "Garden Ke Liye Bamboo Chair – Nature Ka Touch!", image: "/images/sil7.jpg", link: "https://ecobambo.com/products/garden-ke-liye-bamboo-chair-nature-ka-touch" },
   ];
 
   return (
     <div className="relative w-full py-12 bg-white">
-
       {/* Animated Title */}
       <h1
         className={`
-          text-4xl font-extrabold text-center mb-10 transition-all duration-700
+          text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-10 transition-all duration-700
           ${showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
         `}
       >
@@ -79,26 +42,22 @@ const RelatedProducts = () => {
       {/* Left Button */}
       <button
         onClick={scrollPrev}
-        className="
-          absolute left-3 top-1/2 -translate-y-1/2
-          bg-white shadow-lg p-3 rounded-full hover:bg-gray-100 transition z-10
-        "
+        className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-gray-100 transition z-10"
       >
-        <ChevronLeft size={26} />
+        <ChevronLeft size={20} className="sm:hidden" />
+        <ChevronLeft size={26} className="hidden sm:block" />
       </button>
 
       {/* Right Button */}
       <button
         onClick={scrollNext}
-        className="
-          absolute right-3 top-1/2 -translate-y-1/2
-          bg-white shadow-lg p-3 rounded-full hover:bg-gray-100 transition z-10
-        "
+        className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-gray-100 transition z-10"
       >
-        <ChevronRight size={26} />
+        <ChevronRight size={20} className="sm:hidden" />
+        <ChevronRight size={26} className="hidden sm:block" />
       </button>
 
-      {/* SLIDER */}
+      {/* Slider */}
       <div className="overflow-hidden w-full px-[5px]" ref={emblaRef}>
         <div className="flex gap-4">
 
@@ -107,14 +66,14 @@ const RelatedProducts = () => {
               key={product.id}
               className="
                 flex-none
-                w-[260px] md:w-[300px] lg:w-[340px]
+                w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px]
                 bg-white p-3 rounded-xl shadow 
                 hover:shadow-lg hover:scale-[1.02]
                 transition duration-300 cursor-pointer
               "
             >
               <a href={product.link} target="_blank">
-                <div className="w-full h-[200px] rounded-lg overflow-hidden mb-2">
+                <div className="w-full h-[150px] sm:h-[180px] md:h-[200px] rounded-lg overflow-hidden mb-2">
                   <img
                     src={product.image}
                     alt={product.name}
@@ -122,8 +81,7 @@ const RelatedProducts = () => {
                   />
                 </div>
 
-                {/* One-line Title */}
-                <p className="text-sm font-semibold text-center truncate">
+                <p className="text-xs sm:text-sm md:text-sm font-semibold text-center truncate">
                   {product.name}
                 </p>
               </a>
@@ -132,7 +90,6 @@ const RelatedProducts = () => {
 
         </div>
       </div>
-
     </div>
   );
 };
