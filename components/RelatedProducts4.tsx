@@ -97,20 +97,15 @@ const RelatedProducts4 = () => {
       image: "/images/col1.jpg",
       link: "https://ecobambo.com/products/handmade-bamboo-shade-for-car-parking",
     },
+      
     {
       id: "6",
-      name: "Bamboo Wall Design for a Sustainable Home Makeover",
-      image: "/images/col2.jpg",
-      link: "https://ecobambo.com/products/bamboo-wall-design",
-    },
-    {
-      id: "7",
       name: "Spacious Bamboo Canopy with Multi-Purpose Use",
       image: "/images/col3.jpg",
       link: "https://ecobambo.com/products/spacious-bamboo-canopy-with-multi-purpose-use",
     },
     {
-      id: "8",
+      id: "7",
       name: "Luxurious Bamboo Beds for Ultimate Comfort",
       image: "/images/col4.jpg",
       link: "https://ecobambo.com/products/luxurious-bamboo-beds-for-ultimate-comfort",
