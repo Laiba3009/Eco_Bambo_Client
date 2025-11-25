@@ -59,38 +59,38 @@ const RelatedProducts = () => {
 
       {/* Slider */}
       <div className="overflow-hidden w-full px-[5px]" ref={emblaRef}>
-        <div className="flex gap-4">
+        
+<div className="flex gap-4">
 
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="
-                flex-none
-                w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px]
-                bg-white p-3 rounded-xl shadow 
-                hover:shadow-lg hover:scale-[1.02]
-                transition duration-300 cursor-pointer
-              "
-            >
-              <a href={product.link} target="_blank">
-                <div className="w-full h-[150px] sm:h-[180px] md:h-[200px] rounded-lg overflow-hidden mb-2">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+  {products.map((product) => (
+    <div
+      key={product.id}
+      className="
+        flex-none
+        w-[230px] sm:w-[240px] md:w-[260px] lg:w-[300px]
+        bg-white p-3 rounded-xl shadow 
+        hover:shadow-lg hover:scale-[1.02]
+        transition duration-300 cursor-pointer
+      "
+    >
+      <a href={product.link} target="_blank">
+        <div className="w-full h-[190px] sm:h-[200px] md:h-[220px] rounded-lg overflow-hidden mb-2">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
 
-                <p className="text-xs sm:text-sm md:text-sm font-semibold text-center truncate">
-                  {product.name}
-                </p>
-              </a>
-            </div>
-          ))}
-
+        <p className="text-sm sm:text-sm md:text-base font-semibold text-center truncate">
+          {product.name}
+        </p>
+      </a>
+    </div>
+  ))}
+    </div>
         </div>
       </div>
-    </div>
   );
 };
 
