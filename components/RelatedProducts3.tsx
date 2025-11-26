@@ -36,7 +36,7 @@ const RelatedProducts3: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // ✅ Manual Products Data
+  // Products Data
   const products: Product[] = [
     {
       id: "1",
@@ -84,7 +84,8 @@ const RelatedProducts3: React.FC = () => {
 
   return (
     <section className="w-full py-12 px-4">
-      <.h2motion
+      {/* Title */}
+      <motion.h2
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: showTitle ? 1 : 0, y: showTitle ? 0 : -30 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -93,42 +94,43 @@ const RelatedProducts3: React.FC = () => {
         Related Products
       </motion.h2>
 
+      {/* Products Slider */}
       <div
         ref={scrollRef}
         className="flex overflow-x-scroll space-x-4 pb-6 scrollbar-hide snap-x snap-mandatory"
       >
         {products.map((product, index) => (
           <motion.div
-  key={product.id}
-  className="
-    flex-none
-    w-[230px] sm:w-[240px] md:w-[260px] lg:w-[300px]
-    bg-white rounded-xl shadow-md overflow-hidden snap-center
-    cursor-pointer transform transition-transform duration-300
-    hover:scale-105
-  "
-  initial={{ opacity: 0, y: 30 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: index * 0.1, duration: 0.5 }}
->
-  <a href={product.link} target="_blank" rel="noopener noreferrer">
-    <div className="w-full h-[190px] sm:h-[200px] md:h-[220px] overflow-hidden rounded-lg mb-2">
-      <img
-        src={product.image}
-        alt={product.name}
-        className="w-full h-full object-cover"
-      />
-    </div>
-  </a>
+            key={product.id}
+            className="
+              flex-none
+              w-[70%] sm:w-[240px] md:w-[260px] lg:w-[300px]
+              bg-white rounded-xl shadow-md overflow-hidden snap-center
+              cursor-pointer transform transition-transform duration-300
+              hover:scale-105
+            "
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1, duration: 0.5 }}
+          >
+            <a href={product.link} target="_blank" rel="noopener noreferrer">
+              <div className="w-full h-[220px] sm:h-[240px] md:h-[260px] lg:h-[300px] overflow-hidden rounded-lg mb-2">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </a>
 
-  <div className="p-3">
-    <a href={product.link} target="_blank" rel="noopener noreferrer">
-      <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 truncate hover:text-indigo-600 transition-colors">
-        {product.name}
-      </h3>
-    </a>
-  </div>
-</motion.div>
+            <div className="p-3">
+              <a href={product.link} target="_blank" rel="noopener noreferrer">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 truncate hover:text-indigo-600 transition-colors">
+                  {product.name}
+                </h3>
+              </a>
+            </div>
+          </motion.div>
         ))}
       </div>
     </section>
