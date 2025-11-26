@@ -16,37 +16,40 @@ interface Product {
 // Product Card UI
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden text-center
-                    w-[240px] h-[330px] flex flex-col justify-between
-                    hover:shadow-lg transition-shadow shrink-0 mx-3">
-
+    <div
+      className="
+        bg-white rounded-xl shadow-md overflow-hidden text-center
+        w-64 h-[370px] sm:w-72 sm:h-[400px] md:w-60 md:h-[330px] lg:w-[240px] lg:h-[330px]
+        flex flex-col justify-between hover:shadow-lg transition-shadow shrink-0 mx-3
+      "
+    >
       {/* Image */}
       <a href={product.link} target="_blank" rel="noopener noreferrer">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-44 object-cover cursor-pointer"
+          className="w-full h-52 sm:h-60 md:h-44 lg:h-44 object-cover cursor-pointer"
         />
       </a>
 
       <div className="p-3 flex-1 flex flex-col">
         {/* Title */}
         <a href={product.link} target="_blank" rel="noopener noreferrer">
-          <h3 className="text-base font-semibold mb-2 text-gray-800 line-clamp-2">
+          <h3 className="text-base sm:text-lg font-semibold mb-2 text-gray-800 line-clamp-2">
             {product.name}
           </h3>
         </a>
 
-        {/* Product Type (optional) */}
+        {/* Product Type */}
         {product.productType && (
-          <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full mb-2">
+          <span className="text-xs sm:text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded-full mb-2">
             {product.productType}
           </span>
         )}
 
         {/* Button */}
         <a href={product.link} target="_blank" rel="noopener noreferrer" className="mt-auto">
-          <button className="w-full bg-[#b8860b] text-white py-2 rounded-md hover:bg-black transition-colors text-sm">
+          <button className="w-full bg-[#b8860b] text-white py-2 rounded-md hover:bg-black transition-colors text-sm sm:text-base">
             View Product
           </button>
         </a>
@@ -65,7 +68,7 @@ const RelatedProducts4 = () => {
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
-  // ✅ MANUAL 8 PRODUCTS
+  // ✅ MANUAL PRODUCTS
   const products: Product[] = [
     {
       id: "1",
@@ -97,7 +100,6 @@ const RelatedProducts4 = () => {
       image: "/images/col1.jpg",
       link: "https://ecobambo.com/products/handmade-bamboo-shade-for-car-parking",
     },
-      
     {
       id: "6",
       name: "Spacious Bamboo Canopy with Multi-Purpose Use",
@@ -112,7 +114,6 @@ const RelatedProducts4 = () => {
     },
   ];
 
-  // FIXED useEffect (No TypeScript Error)
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     setCurrentSlideIndex(emblaApi.selectedScrollSnap());
@@ -156,7 +157,7 @@ const RelatedProducts4 = () => {
         </div>
       </div>
 
-      {/* Buttons */}
+      {/* Navigation Buttons */}
       <button
         className="absolute top-1/2 -left-8 -translate-y-1/2 bg-[#b8860b] text-white p-3 rounded-full shadow hover:bg-gray-800"
         onClick={scrollPrev}
