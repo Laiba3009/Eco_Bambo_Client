@@ -157,20 +157,21 @@ const RelatedProducts4 = () => {
         </div>
       </div>
 
-      {/* Navigation Buttons */}
-      <button
-        className="absolute top-1/2 -left-8 -translate-y-1/2 bg-[#b8860b] text-white p-3 rounded-full shadow hover:bg-gray-800"
-        onClick={scrollPrev}
-      >
-        ‹
-      </button>
+     {/* Navigation Buttons */}
+<button
+  className="absolute top-1/2 left-1 sm:-left-8 -translate-y-1/2 bg-[#b8860b] text-white p-3 rounded-full shadow hover:bg-gray-800 z-10"
+  onClick={scrollPrev}
+>
+  ‹
+</button>
 
-      <button
-        className="absolute top-1/2 -right-8 -translate-y-1/2 bg-[#b8860b] text-white p-3 rounded-full shadow hover:bg-gray-800"
-        onClick={scrollNext}
-      >
-        ›
-      </button>
+<button
+  className="absolute top-1/2 right-1 sm:-right-8 -translate-y-1/2 bg-[#b8860b] text-white p-3 rounded-full shadow hover:bg-gray-800 z-10"
+  onClick={scrollNext}
+>
+  ›
+</button>
+
 
       {/* Dots */}
       <div className="flex justify-center mt-6">
