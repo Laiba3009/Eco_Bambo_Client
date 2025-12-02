@@ -150,7 +150,7 @@ const AddToCart = ({ product, selectedVariant }) => {
           <button
             onClick={handleAddToCart}
             disabled={loading || !selectedVariant?.id}
-            className="bg-black text-[rgb(184,134,11,1)] py-3 px-4 rounded flex items-center justify-center gap-2 w-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-800 transition-colors"
+            className="bg-black text-[rgb(184,134,11,1)] py-3 px-4 rounded flex items-center hover:text-white justify-center gap-2 w-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-900 transition-colors"
           >
             <FaShoppingCart />
             {loading ? "Adding..." : "Add to Cart"}
@@ -159,7 +159,7 @@ const AddToCart = ({ product, selectedVariant }) => {
           <button
             onClick={handleOrderNow}
             disabled={loading || !selectedVariant?.id}
-            className="border border-[rgb(184,134,11,1)] bg-black text-[rgb(184,134,11,1)] py-4 px-6 rounded flex items-center justify-center gap-2 w-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-800 transition-colors"
+            className="border border-[rgb(184,134,11,1)] bg-black text-[rgb(184,134,11,1)] py-4 px-6 rounded hover:text-white  flex items-center justify-center gap-2 w-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-900 transition-colors"
           >
             <FaShoppingBag />
             {loading ? "Processing..." : "Order Now"}
