@@ -8,7 +8,8 @@ import ReviewCheck from "@/components/ReviewCheck";
 import PlanterFAQSection from "../../components/FAQ_1";
 import { FaShippingFast } from "react-icons/fa";
 import Head from "next/head";
-import RelatedProduct2 from "@/components/RelatedProducts2";
+import RelatedProducts2 from "@/components/RelatedProducts2";
+
 import PromoBanner2 from "@/components/PromoBanner2";
 import ImageSlider from "../../components/ImageSlider";
 
