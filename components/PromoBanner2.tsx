@@ -1,95 +1,181 @@
-"use client";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import Typewriter from "typewriter-effect";
 
-import React, { useCallback, useEffect, useState } from "react";
-import useEmblaCarousel from "embla-carousel-react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+// ⭐ Typewriter Props
+interface CustomTypewriterProps {
+  strings: string[];
+  delay?: number;
+  loop?: boolean;
+}
 
-const RelatedProducts = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    loop: false,
-    dragFree: false,
-  });
+// Typewriter Component
+const CustomTypewriter: React.FC<CustomTypewriterProps> = ({
+  strings,
+  delay = 10,
+  loop = true,
+}) => {
+  const [text, setText] = useState("");
+  const [stringIndex, setStringIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+  useEffect(() => {
+    const currentString = strings[stringIndex];
+    let timeout;
 
-  const [showTitle, setShowTitle] = useState(false);
-  useEffect(() => setShowTitle(true), []);
+    if (isDeleting) {
+      timeout = setTimeout(() => {
+        setText(currentString.substring(0, charIndex - 1));
+        setCharIndex(charIndex - 1);
+        if (charIndex === 0) {
+          setIsDeleting(false);
+          setStringIndex((prev) => (prev + 1) % strings.length);
+        }
+      }, delay / 2);
+    } else {
+      timeout = setTimeout(() => {
+        setText(currentString.substring(0, charIndex + 1));
+        setCharIndex(charIndex + 1);
+        if (charIndex === currentString.length) {
+          if (loop) setIsDeleting(true);
+        }
+      }, delay);
+    }
 
-  const products = [
-    { id: "1", name: "Premium Bamboo Gazebo for Garden and Outdoor Stylish Bamboo Pavilion & Pergola", image: "/images/sil1.jpg", link: "https://ecobambo.com/products/bamboo-gazebo-with-open-air-design" },
-    { id: "2", name: "Modern Living Room Ke Liye Elegant Bamboo Sofa Set", image: "/images/sil2.jpg", link: "https://ecobambo.com/products/modern-living-room-ke-liye-elegant-bamboo-sofa-set" },
-    { id: "3", name: "Premium Bamboo Single Bed for Kids with Canopy Design", image: "/images/sil3.jpg", link: "https://ecobambo.com/products/bamboo-single-beds-for-kids" },
-    { id: "4", name: "Modern Bamboo Baby Chair – Eco-Friendly Seating", image: "/images/sil4.jpg", link: "https://ecobambo.com/products/modern-bamboo-baby-chair-master-everyday-chair-visitor" },
-    { id: "5", name: "Handmade Bamboo Fence for Outdoor & Garden – Perfect Touch", image: "/images/sil5.jpg", link: "https://ecobambo.com/products/handmade-bamboo-fence" },
-    { id: "6", name: "Covered Bamboo Swing – Relax in Style with Shade", image: "/images/sil6.jpg", link: "https://ecobambo.com/products/outdoor-bamboo-swings-for-toddlers" },
-    { id: "7", name: "Garden Ke Liye Bamboo Chair – Nature Ka Touch!", image: "/images/sil7.jpg", link: "https://ecobambo.com/products/garden-ke-liye-bamboo-chair-nature-ka-touch" },
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, stringIndex, strings, delay, loop]);
+
+  return <span>{text}</span>;
+};
+
+// Animation Variant
+const slideInVariant = {
+  hidden: { opacity: 0, y: 100 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.2,
+      duration: 0.7,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  }),
+};
+
+const App = () => {
+  const images = [
+    {
+      id: 1,
+      src: "/images/b-g1.png",
+      alt: "Bamboo Flower Pot Collection",
+      link: "https://ecobambo.com/products/small-bamboo-flower-pot-with-stand-stylish-indoor-artificial-pot",
+      buttonText: "Shop Now",
+    },
+    {
+      id: 2,
+      src: "/images/b-g2.png",
+      alt: "Bamboo Hanging Decor",
+      link: "https://ecobambo.com/products/small-bamboo-hanging-with-stand-stylish-home-wall-art-decor",
+      buttonText: "Shop Now",
+    },
+    {
+      id: 3,
+      src: "/images/b-g3.png",
+      alt: "Unique Bamboo Wall Hanging",
+      link: "https://ecobambo.com/products/1-unique-bamboo-wall-hanging-affordable-home-wall-art-decor-in-small-sizes-for-living-areas",
+      buttonText: "Shop Now",
+    },
   ];
 
   return (
-    <div className="relative w-full py-12 bg-white">
-      {/* Animated Title */}
-      <h1
-        className={`
-          text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-10 transition-all duration-700
-          ${showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
-        `}
-      >
-        Related Products
-      </h1>
+    <section className="px-0 py-0 bg-white mb-5 min-h-screen flex items-center justify-center font-sans">
+      <div className="max-w-[1300px] mx-auto w-full">
 
-      {/* Left Button */}
-      <button
-        onClick={scrollPrev}
-        className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-amber-300 transition z-10"
-      >
-        <ChevronLeft size={20} className="sm:hidden" />
-        <ChevronLeft size={26} className="hidden sm:block" />
-      </button>
+        {/* Heading */}
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-center mb-6 text-black min-h-[70px] sm:min-h-[90px] md:min-h-[120px] flex items-center justify-center">
+          <Typewriter
+            options={{
+              strings: ["Fresh Decor & Greenery for Your Home!"],
+              autoStart: true,
+              loop: true,
+              delay: 50,
+            }}
+          />
+        </h2>
 
-      {/* Right Button */}
-      <button
-        onClick={scrollNext}
-        className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-amber-300 transition z-10"
-      >
-        <ChevronRight size={20} className="sm:hidden" />
-        <ChevronRight size={26} className="hidden sm:block" />
-      </button>
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 gap-4 justify-items-center">
 
-      {/* Slider */}
-      <div className="overflow-hidden w-full px-[5px]" ref={emblaRef}>
-        <div className="flex gap-4">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="
-                flex-none
-                w-[350px] sm:w-[300px] md:w-[400px] lg:w-[500px]
-                bg-white p-3 rounded-xl shadow 
-                hover:shadow-lg hover:scale-[1.02]
-                transition duration-300 cursor-pointer
-              "
-            >
-              <a href={product.link} target="_blank">
-                <div className="w-full h-[270px] sm:h-[250px] md:h-[390px] rounded-lg overflow-hidden mb-2">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+          {/* Left Image */}
+          <motion.a
+            href={images[1].link}
+            target="_blank"
+            rel="noopener noreferrer"
+            custom={1}
+            variants={slideInVariant as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            className="relative group h-[250px] md:h-[320px] overflow-hidden rounded-xl shadow-lg block w-full max-w-[95%] hover:shadow-xl transition"
+          >
+            <img
+              src={images[1].src}
+              alt={images[1].alt}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <span className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm transition-colors">
+              {images[1].buttonText}
+            </span>
+          </motion.a>
 
-                <p className="text-sm sm:text-sm md:text-base font-semibold text-left truncate">
-                  {product.name}
-                </p>
-              </a>
-            </div>
-          ))}
+          {/* Right Image */}
+          <motion.a
+            href={images[2].link}
+            target="_blank"
+            rel="noopener noreferrer"
+            custom={2}
+            variants={slideInVariant as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            className="relative group h-[250px] md:h-[320px] overflow-hidden rounded-xl shadow-lg block w-full max-w-[95%] hover:shadow-xl transition"
+          >
+            <img
+              src={images[2].src}
+              alt={images[2].alt}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <span className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm transition-colors">
+              {images[2].buttonText}
+            </span>
+          </motion.a>
+
+          {/* Large Banner */}
+          <motion.a
+            href={images[0].link}
+            target="_blank"
+            rel="noopener noreferrer"
+            custom={0}
+            variants={slideInVariant as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            className="relative group h-[480px] md:h-[550px] overflow-hidden rounded-xl shadow-lg block w-full max-w-[95%] mx-auto hover:shadow-xl transition"
+          >
+            <img
+              src={images[0].src}
+              alt={images[0].alt}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <span className="absolute bottom-5 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-base transition-colors">
+              {images[0].buttonText}
+            </span>
+          </motion.a>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default RelatedProducts;
+export default App;
