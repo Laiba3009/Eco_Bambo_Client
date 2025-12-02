@@ -38,9 +38,7 @@ const CustomTypewriter: React.FC<CustomTypewriterProps> = ({
         setText(currentString.substring(0, charIndex + 1));
         setCharIndex(charIndex + 1);
         if (charIndex === currentString.length) {
-          if (loop) {
-            setIsDeleting(true);
-          }
+          if (loop) setIsDeleting(true);
         }
       }, delay);
     }
@@ -95,14 +93,7 @@ const App = () => {
       <div className="max-w-[1300px] mx-auto w-full">
 
         {/* Heading */}
-        <h2
-          className="
-            text-2xl sm:text-3xl md:text-5xl
-            font-bold text-center mb-6 text-black
-            min-h-[70px] sm:min-h-[90px] md:min-h-[120px]
-            flex items-center justify-center
-          "
-        >
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-center mb-6 text-black min-h-[70px] sm:min-h-[90px] md:min-h-[120px] flex items-center justify-center">
           <Typewriter
             options={{
               strings: ["Fresh Decor & Greenery for Your Home!"],
@@ -128,14 +119,14 @@ const App = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.4 }}
-              className="relative group h-[250px] md:h-[320px] overflow-hidden rounded-xl shadow-lg block w-auto max-w-[95%]"
+              className="relative group h-[250px] md:h-[320px] overflow-hidden rounded-xl shadow-lg block w-auto max-w-[90%] hover:shadow-xl transition"
             >
               <img
                 src={images[1].src}
                 alt={images[1].alt}
                 className="h-full w-auto object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <span className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm">
+              <span className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm transition-colors">
                 {images[1].buttonText}
               </span>
             </motion.a>
@@ -150,14 +141,14 @@ const App = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.4 }}
-              className="relative group h-[250px] md:h-[320px] overflow-hidden rounded-xl shadow-lg block w-auto max-w-[95%]"
+              className="relative group h-[250px] md:h-[320px] overflow-hidden rounded-xl shadow-lg block w-auto max-w-[90%] hover:shadow-xl transition"
             >
               <img
                 src={images[2].src}
                 alt={images[2].alt}
                 className="h-full w-auto object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <span className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm">
+              <span className="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm transition-colors">
                 {images[2].buttonText}
               </span>
             </motion.a>
@@ -173,14 +164,14 @@ const App = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
-            className="relative group h-[480px] md:h-[550px] overflow-hidden rounded-xl shadow-lg block w-auto max-w-[95%] mx-auto"
+            className="relative group h-[480px] md:h-[550px] overflow-hidden rounded-xl shadow-lg block w-auto max-w-[95%] mx-auto hover:shadow-xl transition"
           >
             <img
               src={images[0].src}
               alt={images[0].alt}
               className="h-full w-auto object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <span className="absolute bottom-5 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-base">
+            <span className="absolute bottom-5 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-base transition-colors">
               {images[0].buttonText}
             </span>
           </motion.a>
