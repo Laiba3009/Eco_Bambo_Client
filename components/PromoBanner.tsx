@@ -1,9 +1,9 @@
 import React from "react";
 import Typewriter from "typewriter-effect";
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
 
 // Animation Variants
-const slideInVariant: Variants = {
+const slideInVariant = {
   hidden: { opacity: 0, x: 100 },
   visible: (i = 0) => ({
     opacity: 1,
@@ -11,32 +11,26 @@ const slideInVariant: Variants = {
     transition: {
       delay: i * 0.2,
       duration: 0.7,
-      ease: [0.16, 1, 0.3, 1],
+      ease: "easeOut",
     },
   }),
 };
 
 const PromoBanner = () => {
   return (
-    <section className=" px-4 bg-white">
+    <section className="py-8 px-4 bg-white">
       {/* Title */}
-      
-<h2
-    className="
-      text-2xl sm:text-3xl md:text-5xl
-      font-bold text-center text-black
-      flex items-center justify-center
-    "
-  >
-  <Typewriter
-    options={{
-      strings: ["Coastal Farmhouse Decor House Plants for Sale!"],
-      autoStart: true,
-      loop: true,
-      delay: 50,
-    }}
-  />
-</h2>
+      <h2 className="text-xl sm:text-2xl md:text-4xl font-semibold text-center mb-8 text-black">
+        <Typewriter
+          options={{
+            strings: ["Coastal Farmhouse Decor House Plants for Sale!"],
+            autoStart: true,
+            loop: true,
+            delay: 10,
+          }}
+        />
+      </h2>
+
       {/* Grid */}
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-5 gap-2 sm:gap-2">
         
