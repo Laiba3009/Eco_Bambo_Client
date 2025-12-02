@@ -11,7 +11,7 @@ import Head from "next/head";
 import PromoBanner2 from "@/components/PromoBanner2";
 import RelatedProduct2 from "@/components/RelatedProducts2";
 import ImageSlider from "../../components/ImageSlider";
-import RelatedProducts2 from "@/components/RelatedProducts2";
+
 import FeatureHighlights from "@/components/FeatureHighlights";
 
 function toTitleCase(str: string) {
