@@ -2,16 +2,16 @@ import React from "react";
 import Typewriter from "typewriter-effect";
 import { motion } from "framer-motion";
 
-// Animation Variants
+// Animation Variants (FIXED for Vercel TypeScript)
 const slideInVariant = {
   hidden: { opacity: 0, x: 100 },
-  visible: (i = 0) => ({
+  visible: (i: number = 0) => ({
     opacity: 1,
     x: 0,
     transition: {
       delay: i * 0.2,
       duration: 0.7,
-      ease: "easeOut",
+      ease: [0.25, 0.1, 0.25, 1.0], // ✔ FIXED
     },
   }),
 };
@@ -42,6 +42,7 @@ const PromoBanner = () => {
               "https://ecobambo.com/products/small-bamboo-hanging-with-stand-stylish-home-wall-art-decor",
               "https://ecobambo.com/products/1-unique-bamboo-wall-hanging-affordable-home-wall-art-decor-in-small-sizes-for-living-areas"
             ];
+
             return (
               <motion.a
                 key={n}
@@ -54,25 +55,23 @@ const PromoBanner = () => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.4 }}
                 className="relative group h-[250px] rounded-xl overflow-hidden block"
-                style={{ textDecoration: 'none' }}
               >
                 <img
                   src={`/images/b-g${n}.png`}
                   alt={`Banner ${n}`}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold transition-all duration-300 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:bg-gray-800 group-hover:text-white text-sm">
-                  {i === 2 ? 'Order Now' : 'Shop Now'}
+                <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold transition-all duration-300 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 text-sm">
+                  {i === 2 ? "Order Now" : "Shop Now"}
                 </span>
               </motion.a>
             );
           })}
         </div>
 
-        {/* Desktop Left Large Image */}
+        {/* Desktop Large Left Image */}
         <motion.a
-          href= "/products/large-bamboo-standing-plant-pot-unique-affordable"
-
+          href="/products/large-bamboo-standing-plant-pot-unique-affordable"
           target="_blank"
           rel="noopener noreferrer"
           variants={slideInVariant}
@@ -80,22 +79,22 @@ const PromoBanner = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.4 }}
           custom={0}
-          className="hidden md:block md:col-span-3 h-[600px] lg:h-[665px]   relative group overflow-hidden rounded-xl"
-          style={{ textDecoration: 'none' }}
+          className="hidden md:block md:col-span-3 h-[600px] lg:h-[665px] relative group overflow-hidden rounded-xl"
         >
           <img
             src="/images/pot-banner.jpg"
-            alt="Banner 1"
-            className="w-full h-full  object-cover transition-transform duration-500 group-hover:scale-105"
+            alt="Large Bamboo Pot"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          <span className="absolute bottom-4 left-4 px-2 py-2 rounded-full bg-gray-800 text-white font-semibold transition-all duration-300 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:bg-gray-800 group-hover:text-white text-sm sm:text-base">
+          <span className="absolute bottom-4 left-4 px-2 py-2 rounded-full bg-gray-800 text-white font-semibold transition-all duration-300 opacity-0 translate-y-3 group-hover:opacity-100 text-sm sm:text-base">
             Shop Now
           </span>
         </motion.a>
 
-        {/* Desktop Right Two Images */}
+        {/* Desktop Right Images */}
         <div className="hidden md:flex md:col-span-2 flex-col gap-1 h-[660px]">
-          {/* Top right image */}
+
+          {/* Top Right */}
           <motion.a
             href="https://ecobambo.com/products/1-unique-bamboo-wall-hanging-affordable-home-wall-art-decor-in-small-sizes-for-living-areas"
             target="_blank"
@@ -106,20 +105,20 @@ const PromoBanner = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
             className="relative group h-[52%] overflow-hidden rounded-xl"
-            style={{ textDecoration: 'none' }}
           >
             <img
-              src="/images/large-hang wall-baner.jpg"
-              alt="Banner 2"
+              src="/images/large-hang-wall-baner.jpg"  // ✔ FIXED — no space
+              alt="Wall Hanging Decor"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold transition-all duration-300 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:bg-gray-800 group-hover:text-white text-sm sm:text-base">
+            <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 text-sm sm:text-base">
               Shop Now
             </span>
           </motion.a>
-          {/* Bottom right image */}
+
+          {/* Bottom Right */}
           <motion.a
-           href=  "https://ecobambo.com/products/small-bamboo-hanging-with-stand-stylish-home-wall-art-decor"
+            href="https://ecobambo.com/products/small-bamboo-hanging-with-stand-stylish-home-wall-art-decor"
             target="_blank"
             rel="noopener noreferrer"
             custom={2}
@@ -128,14 +127,13 @@ const PromoBanner = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
             className="relative group h-1/2 overflow-hidden rounded-xl"
-            style={{ textDecoration: 'none' }}
           >
             <img
               src="/images/image1.png"
               alt="Banner 3"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold transition-all duration-300 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 group-hover:bg-gray-800 group-hover:text-white text-sm sm:text-base">
+            <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 translate-y-3 transition-all duration-300 group-hover:opacity-100 text-sm sm:text-base">
               Order Now
             </span>
           </motion.a>
