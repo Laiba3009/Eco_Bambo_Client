@@ -39,23 +39,24 @@ const RelatedProducts = () => {
         Related Products
       </h1>
 
-      {/* Left Button */}
-      <button
-        onClick={scrollPrev}
-        className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-gray-100 transition z-10"
-      >
-        <ChevronLeft size={20} className="sm:hidden" />
-        <ChevronLeft size={26} className="hidden sm:block" />
-      </button>
+     {/* Left Button */}
+<button
+  onClick={scrollPrev}
+  className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-amber-400 transition z-10"
+>
+  <ChevronLeft size={20} className="sm:hidden" />
+  <ChevronLeft size={26} className="hidden sm:block" />
+</button>
 
-      {/* Right Button */}
-      <button
-        onClick={scrollNext}
-        className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-gray-100 transition z-10"
-      >
-        <ChevronRight size={20} className="sm:hidden" />
-        <ChevronRight size={26} className="hidden sm:block" />
-      </button>
+{/* Right Button */}
+<button
+  onClick={scrollNext}
+  className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-amber-400 transition z-10"
+>
+  <ChevronRight size={20} className="sm:hidden" />
+  <ChevronRight size={26} className="hidden sm:block" />
+</button>
+
 
       {/* Slider */}
       <div className="overflow-hidden w-full px-[5px]" ref={emblaRef}>
@@ -82,9 +83,11 @@ const RelatedProducts = () => {
           />
         </div>
 
-        <p className="text-sm sm:text-sm md:text-base font-semibold text-center truncate">
-          {product.name}
-        </p>
+        {/* Product title */}
+<p className="text-sm sm:text-sm md:text-base font-semibold text-center overflow-hidden whitespace-nowrap text-ellipsis">
+  {product.name}
+</p>
+
       </a>
     </div>
   ))}
