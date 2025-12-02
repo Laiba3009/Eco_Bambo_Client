@@ -67,14 +67,14 @@ const RelatedProducts = () => {
       key={product.id}
       className="
         flex-none
-        w-[230px] sm:w-[270px] md:w-[300px] lg:w-[350px]
+        w-[490px] sm:w-[350px] md:w-[400px] lg:w-[500px]
         bg-white p-3 rounded-xl shadow 
         hover:shadow-lg hover:scale-[1.02]
         transition duration-300 cursor-pointer
       "
     >
       <a href={product.link} target="_blank">
-        <div className="w-full h-[190px] sm:h-[270px] md:h-[290px] rounded-lg overflow-hidden mb-2">
+        <div className="w-full h-[270px] sm:h-[350px] md:h-[390px] rounded-lg overflow-hidden mb-2">
           <img
             src={product.image}
             alt={product.name}
