@@ -18,17 +18,16 @@ const slideInVariant: Variants = {
 
 const PromoBanner = () => {
   return (
-    <section className="py-8 px-4 bg-white">
+    <section className=" px-4 bg-white">
       {/* Title */}
       
 <h2
-  className="
-    text-2xl sm:text-3xl md:text-5xl
-    font-bold text-center mb-6 text-black
-    min-h-[70px] sm:min-h-[90px] md:min-h-[120px]
-    flex items-center justify-center
-  "
->
+    className="
+      text-2xl sm:text-3xl md:text-5xl
+      font-bold text-center text-black
+      flex items-center justify-center
+    "
+  >
   <Typewriter
     options={{
       strings: ["Coastal Farmhouse Decor House Plants for Sale!"],
