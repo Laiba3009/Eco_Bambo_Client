@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
 
+// ⭐ ADD THIS — FIX ERROR
 interface CustomTypewriterProps {
   strings: string[];
   delay?: number;
   loop?: boolean;
 }
 
+// Custom Typewriter component
 const CustomTypewriter: React.FC<CustomTypewriterProps> = ({
   strings,
   delay = 10,
@@ -26,7 +28,6 @@ const CustomTypewriter: React.FC<CustomTypewriterProps> = ({
       timeout = setTimeout(() => {
         setText(currentString.substring(0, charIndex - 1));
         setCharIndex(charIndex - 1);
-
         if (charIndex === 0) {
           setIsDeleting(false);
           setStringIndex((prev) => (prev + 1) % strings.length);
@@ -36,9 +37,10 @@ const CustomTypewriter: React.FC<CustomTypewriterProps> = ({
       timeout = setTimeout(() => {
         setText(currentString.substring(0, charIndex + 1));
         setCharIndex(charIndex + 1);
-
         if (charIndex === currentString.length) {
-          if (loop) setIsDeleting(true);
+          if (loop) {
+            setIsDeleting(true);
+          }
         }
       }, delay);
     }
@@ -93,7 +95,14 @@ const App = () => {
       <div className="max-w-[1300px] mx-auto w-full">
 
         {/* Heading */}
-        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-center mb-6 text-black min-h-[70px] sm:min-h-[90px] md:min-h-[120px] flex items-center justify-center">
+        <h2
+          className="
+            text-2xl sm:text-3xl md:text-5xl
+            font-bold text-center mb-6 text-black
+            min-h-[70px] sm:min-h-[90px] md:min-h-[120px]
+            flex items-center justify-center
+          "
+        >
           <Typewriter
             options={{
               strings: ["Fresh Decor & Greenery for Your Home!"],
@@ -104,54 +113,57 @@ const App = () => {
           />
         </h2>
 
-        {/* -------- GRID FIXED -------- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 gap-2">
+          {/* Two Equal Images */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 
-          {/* LEFT IMAGE */}
-          <motion.a
-            href={images[1].link}
-            target="_blank"
-            rel="noopener noreferrer"
-            custom={1}
-            variants={slideInVariant as any}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            className="relative group h-[220px] sm:h-[260px] md:h-[300px] w-full overflow-hidden rounded-xl shadow-lg block"
-          >
-            <img
-              src={images[1].src}
-              alt={images[1].alt}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-black/70 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm transition">
-              {images[1].buttonText}
-            </span>
-          </motion.a>
+            {/* Left Image */}
+            <motion.a
+              href={images[1].link}
+              target="_blank"
+              rel="noopener noreferrer"
+              custom={1}
+              variants={slideInVariant as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.4 }}
+              className="relative group h-[250px] md:h-[320px] overflow-hidden rounded-xl shadow-lg block bg-gray-100"
+            >
+              <img
+                src={images[1].src}
+                alt={images[1].alt}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm">
+                {images[1].buttonText}
+              </span>
+            </motion.a>
 
-          {/* RIGHT IMAGE */}
-          <motion.a
-            href={images[2].link}
-            target="_blank"
-            rel="noopener noreferrer"
-            custom={2}
-            variants={slideInVariant as any}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            className="relative group h-[220px] sm:h-[260px] md:h-[300px] w-full overflow-hidden rounded-xl shadow-lg block"
-          >
-            <img
-              src={images[2].src}
-              alt={images[2].alt}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-black/70 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm transition">
-              {images[2].buttonText}
-            </span>
-          </motion.a>
+            {/* Right Image */}
+            <motion.a
+              href={images[2].link}
+              target="_blank"
+              rel="noopener noreferrer"
+              custom={2}
+              variants={slideInVariant as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.4 }}
+              className="relative group h-[250px] md:h-[320px] overflow-hidden rounded-xl shadow-lg block bg-gray-100"
+            >
+              <img
+                src={images[2].src}
+                alt={images[2].alt}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm">
+                {images[2].buttonText}
+              </span>
+            </motion.a>
+          </div>
 
-          {/* FULL-WIDTH BOTTOM BANNER */}
+          {/* Large Banner */}
           <motion.a
             href={images[0].link}
             target="_blank"
@@ -161,14 +173,14 @@ const App = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
-            className="relative group md:col-span-2 h-[430px] sm:h-[480px] md:h-[550px] overflow-hidden rounded-xl shadow-lg block"
+            className="relative group h-[480px] md:h-[550px] overflow-hidden rounded-xl shadow-lg block bg-gray-100"
           >
             <img
               src={images[0].src}
               alt={images[0].alt}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <span className="absolute bottom-5 left-4 px-4 py-2 rounded-full bg-black/70 text-white font-semibold opacity-0 group-hover:opacity-100 text-base transition">
+            <span className="absolute bottom-5 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-base">
               {images[0].buttonText}
             </span>
           </motion.a>
