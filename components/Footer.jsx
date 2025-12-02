@@ -117,7 +117,7 @@ const Footer = () => {
             <h2 className="footer-block__heading text-lg lg:text-xl font-dm text-[#b8860b] mb-4">
               <strong>Eco Bambo Store Policies</strong>
             </h2>
-            <ul className="footer-block__details-content list-none p-0">
+            <ul className="footer-block__details-content list-none text-[#b8860b] p-0">
               <li><a href="https://ecobambo.com/policies/shipping-policy" className="link text-base text-[rgb(184,134,11,1)] hover:text-amber-400 underline font-normal">Shipping & Delivery Policy</a></li>
               <li><a href="https://ecobambo.com/policies/terms-of-service" className="link text-base text-[rgb(184,134,11,1)] hover:text-amber-400 underline font-normal">Terms & Conditions of Use</a></li>
               <li><a href="https://ecobambo.com/policies/refund-policy" className="link text-base text-[rgb(184,134,11,1)] hover:text-amber-400 underline font-normal">Refund Policy & Customer Satisfaction</a></li>
