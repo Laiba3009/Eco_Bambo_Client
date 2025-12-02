@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Typewriter from "typewriter-effect";
 
-// ⭐ ADD THIS — FIX ERROR
-interface CustomTypewriterProps {
+// Custom Typewriter component
+type CustomTypewriterProps = {
   strings: string[];
   delay?: number;
   loop?: boolean;
-}
+};
 
-// Custom Typewriter component
 const CustomTypewriter: React.FC<CustomTypewriterProps> = ({
   strings,
   delay = 10,
@@ -93,23 +91,12 @@ const App = () => {
   return (
     <section className="px-0 py-0 bg-white mb-5 min-h-screen flex items-center justify-center font-sans">
       <div className="max-w-[1300px] mx-auto w-full">
-
         {/* Heading */}
-        <h2
-          className="
-            text-2xl sm:text-3xl md:text-5xl
-            font-bold text-center mb-6 text-black
-            min-h-[70px] sm:min-h-[90px] md:min-h-[120px]
-            flex items-center justify-center
-          "
-        >
-          <Typewriter
-            options={{
-              strings: ["Fresh Decor & Greenery for Your Home!"],
-              autoStart: true,
-              loop: true,
-              delay: 50,
-            }}
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6 text-black">
+          <CustomTypewriter
+            strings={["Fresh Decor & Greenery for Your Home!"]}
+            delay={70}
+            loop={true}
           />
         </h2>
 
@@ -117,7 +104,6 @@ const App = () => {
         <div className="grid grid-cols-1 gap-2">
           {/* Two Equal Images */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-
             {/* Left Image */}
             <motion.a
               href={images[1].link}
@@ -134,8 +120,13 @@ const App = () => {
                 src={images[1].src}
                 alt={images[1].alt}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  target.onerror = null;
+                  target.src = `https://placehold.co/600x400/CCCCCC/000000?text=Image+Error`;
+                }}
               />
-              <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm">
+              <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold transition-all duration-300 opacity-0 group-hover:opacity-100 text-sm">
                 {images[1].buttonText}
               </span>
             </motion.a>
@@ -156,14 +147,19 @@ const App = () => {
                 src={images[2].src}
                 alt={images[2].alt}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  target.onerror = null;
+                  target.src = `https://placehold.co/600x400/CCCCCC/000000?text=Image+Error`;
+                }}
               />
-              <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-sm">
+              <span className="absolute bottom-4 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold transition-all duration-300 opacity-0 group-hover:opacity-100 text-sm">
                 {images[2].buttonText}
               </span>
             </motion.a>
           </div>
 
-          {/* Large Banner */}
+          {/* Large Promo Image */}
           <motion.a
             href={images[0].link}
             target="_blank"
@@ -179,8 +175,13 @@ const App = () => {
               src={images[0].src}
               alt={images[0].alt}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              onError={(e) => {
+                const target = e.currentTarget as HTMLImageElement;
+                target.onerror = null;
+                target.src = `https://placehold.co/1200x500/CCCCCC/000000?text=Image+Error`;
+              }}
             />
-            <span className="absolute bottom-5 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold opacity-0 group-hover:opacity-100 text-base">
+            <span className="absolute bottom-5 left-4 px-4 py-2 rounded-full bg-gray-800 text-white font-semibold transition-all duration-300 opacity-0 group-hover:opacity-100 text-base">
               {images[0].buttonText}
             </span>
           </motion.a>
