@@ -42,7 +42,7 @@ const RelatedProducts = () => {
       {/* Left Button */}
       <button
         onClick={scrollPrev}
-        className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-amber-300 transition z-10"
+        className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-[#b8860b] transition z-10"
       >
         <ChevronLeft size={20} className="sm:hidden" />
         <ChevronLeft size={26} className="hidden sm:block" />
@@ -51,7 +51,7 @@ const RelatedProducts = () => {
       {/* Right Button */}
       <button
         onClick={scrollNext}
-        className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-amber-300 transition z-10"
+        className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 sm:p-3 rounded-full hover:bg-[#b8860b] transition z-10"
       >
         <ChevronRight size={20} className="sm:hidden" />
         <ChevronRight size={26} className="hidden sm:block" />
@@ -66,8 +66,8 @@ const RelatedProducts = () => {
               className="
                 flex-none
                 w-[350px] sm:w-[300px] md:w-[400px] lg:w-[500px]
-                bg-white p-3 rounded-xl shadow 
-                hover:shadow-lg hover:scale-[1.02]
+                bg-white p-3 rounded-xl  
+                hover:scale-[1.02]
                 transition duration-300 cursor-pointer
               "
             >
