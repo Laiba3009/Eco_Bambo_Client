@@ -126,18 +126,27 @@ const Footer = () => {
         </div>
 
         {/* Footer Bottom */}
-        <div className="footer__content-bottom text-center pt-8">
-          <div className="footer__copyright caption text-center flex flex-col lg:flex-row lg:flex-wrap lg:justify-center lg:items-center gap-0 lg:gap-x-4 lg:gap-y-0 text-center">
-            <div className="flex flex-wrap justify-center mb-2 lg:mb-0 lg:flex-nowrap gap-x-4">
-              <small className="text-amber-300 whitespace-nowrap">© 2025, <a href="https://ecobambo.com/" className="hover:text-amber-400">ECO BAMBO.</a></small>
-              <small className="whitespace-nowrap"><a href="https://ecobambo.com/policies/refund-policy" className="hover:text-amber-400">Refund policy.</a></small>
-            </div>
-            <div className="flex flex-wrap justify-center mb-2 lg:mb-0 lg:flex-nowrap gap-x-4">
-              <small className="whitespace-nowrap"><a href="https://ecobambo.com/policies/terms-of-service" className="hover:text-amber-400">Terms of service.</a></small>
-              <small className="whitespace-nowrap"><a href="https://ecobambo.com/policies/shipping-policy" className="hover:text-amber-400">Shipping policy.</a></small>
-            </div>
-          </div>
-        </div>
+       <div className="footer__content-bottom text-center pt-8">
+  <div className="footer__copyright caption text-center flex flex-col lg:flex-row lg:flex-wrap lg:justify-center lg:items-center gap-0 lg:gap-x-4 lg:gap-y-0 text-center">
+    <div className="flex flex-wrap justify-center mb-2 lg:mb-0 lg:flex-nowrap gap-x-4">
+      <small className="text-amber-300 whitespace-nowrap">
+        © 2025, <a href="https://ecobambo.com/" className="text-amber-300 hover:text-amber-400">ECO BAMBO.</a>
+      </small>
+      <small className="whitespace-nowrap">
+        <a href="https://ecobambo.com/policies/refund-policy" className="text-amber-300 hover:text-amber-400">Refund policy.</a>
+      </small>
+    </div>
+    <div className="flex flex-wrap justify-center mb-2 lg:mb-0 lg:flex-nowrap gap-x-4">
+      <small className="whitespace-nowrap">
+        <a href="https://ecobambo.com/policies/terms-of-service" className="text-amber-300 hover:text-amber-400">Terms of service.</a>
+      </small>
+      <small className="whitespace-nowrap">
+        <a href="https://ecobambo.com/policies/shipping-policy" className="text-amber-300 hover:text-amber-400">Shipping policy.</a>
+      </small>
+    </div>
+  </div>
+</div>
+
       </footer>
     </div>
   );
